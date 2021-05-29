@@ -14,9 +14,8 @@ An arduino displayer controlled by a mobile application with bluetooth
 ![Led displayer example](img/led_matrice.jpg)
 
 ### Circuit
-Circuit I use
 ![Circuit image](img/circuit.jpg)
-The led matric I use: [Matrice Led MAX7219](https://fr.aliexpress.com/item/32620800331.html?channel=twinner).   
+The led matric I used: [Matrice Led MAX7219](https://fr.aliexpress.com/item/32620800331.html?channel=twinner).   
 
 ---
 # Commit layout
