@@ -1,0 +1,12 @@
+{
+  "additionalFiles": "..,..",
+  "builtInLibrariesFolders": "",
+  "builtInToolsFolders": "/usr/share/arduino/tools-builder",
+  "compiler.optimization_flags": "",
+  "customBuildProperties": "programmer=arduino:usbtinyisp,build.path=/home/loon/Documents/Projects/Arduino/MatriLED/build,build.warn_data_percentage=75",
+  "fqbn": "archlinux-arduino:avr:uno",
+  "hardwareFolders": "/usr/share/arduino/hardware",
+  "otherLibrariesFolders": "/home/loon/Arduino/libraries",
+  "runtime.ide.version": "10813",
+  "sketchLocation": "/home/loon/Documents/Projects/Arduino/MatriLED/MatriLED.ino"
+}
