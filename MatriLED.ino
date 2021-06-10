@@ -7,14 +7,14 @@ void setup(void)
 {
     Serial.begin(9600);
     Matrice.Text.Align = Center;
-    Matrice.Text.Scroll = false;
     Matrice.Text.Text = "3pitech";
     Init_Matrices(1);
-    (Matrice.ContentInfo[0]).ContentType = Text;
+    (Matrice.ContentInfo[0]).ContentType = Animated_Rain;
     (Matrice.ContentInfo[1]).ContentType = Text;
     (Matrice.ContentInfo[2]).ContentType = Text;
-    (Matrice.ContentInfo[3]).ContentType = Text;
+    (Matrice.ContentInfo[3]).ContentType = Animated_Rain;
     Setup_Matrices();
+    Detect_Scroll();
     if (!Matrice.Text.Scroll)
         Write_NoScroll_Text(Matrice.Text.Text);
 }
@@ -137,9 +137,17 @@ void Setup_Matrices(void)
         if ((Matrice.ContentInfo[i]).ContentType == Text)
             Matrice.Text.Free_Columns += 8;
     }
-    Matrice.Text.Current_Columns = -1 * Matrice.Text.Free_Columns;
+    Matrice.Text.Current_Column = 0;
     Matrice.Text.Columns_Number = Get_Text_Columns_Number(Matrice.Text.Text);
     Matrice.Text.Timepoint = millis();
+}
+
+void Detect_Scroll(void)
+{
+    if (Matrice.Text.Columns_Number > Matrice.Text.Free_Columns)
+        Matrice.Text.Scroll = true;
+    else
+        Matrice.Text.Scroll = false;
 }
 
 void Update_One_Animation(short Matrice_Number)
@@ -197,7 +205,7 @@ bool Write_Column(short Position, byte Layout[8], short Layout_Column)
     short Matrice_Number = -1;
     short Column_Position = Position;
 
-    if (Position < 0)
+    if (Position >= Matrice.Text.Free_Columns || Position < 0)
         return true;
     for (short i = MATRICE_NBR - 1; i >= 0; i--) {
         if ((Matrice.ContentInfo[i]).ContentType == Text) {
@@ -216,27 +224,27 @@ bool Write_Column(short Position, byte Layout[8], short Layout_Column)
     return true;
 }
 
-bool Write_One_Letter(short *Position, byte Layout[8])
+bool Write_One_Letter(short *Position, byte Layout[8], char letter)
 {
-    bool state = true;
+    bool State = true;
     short i = 8;
 
-    for (; !Column_Not_Empty(Layout, i); i--);
-    for (; state && i >= 0; i--, (*Position)--) {
-        state = Write_Column(*Position, Layout, i);
+    for (; i >= 0 && !Column_Not_Empty(Layout, i); i--);
+    for (; State && i >= 0; i--, (*Position)--) {
+        State = Write_Column(*Position, Layout, i);
     }
-    return state;
+    return State;
 }
 
 void Write_Text(short Position, const char *Text)
 {
-    bool state = true;
+    bool State = true;
 
-    for (short i = 0; state && Text[i]; i++) {
+    for (short i = 0; State && Text[i]; i++) {
         if (i) {
             Position--;
         }
-        state = Write_One_Letter(&Position, Ascii_Layouts[Text[i] - 32]);
+        State = Write_One_Letter(&Position, Ascii_Layouts[Text[i] - 32], Text[i]);
     }
 }
 
@@ -264,4 +272,17 @@ void Write_NoScroll_Text(const char *Text)
 
 void Update_Texts(void)
 {
+    if (!Matrice.Text.Scroll)
+        return;
+    if (Check_Time(&Matrice.Text.Timepoint, 200)) {
+        for (int i = 0; i < MATRICE_NBR; i++) {
+            if ((Matrice.ContentInfo[i]).ContentType == Text)
+                Clear_One_Matrice(i);
+        }
+        Write_Text(Matrice.Text.Current_Column, Matrice.Text.Text);
+        if (Matrice.Text.Current_Column >= Matrice.Text.Free_Columns + Matrice.Text.Columns_Number - 1)
+            Matrice.Text.Current_Column = 0;
+        else
+            (Matrice.Text.Current_Column)++;
+    }
 }
