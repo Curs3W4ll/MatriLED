@@ -30,7 +30,7 @@ LedControl lc=LedControl(2,4,3,MATRICE_NBR); //DATA-CLK-LOAD
 typedef struct {
     Align_t Align;
     short Free_Columns;
-    int Current_Columns;
+    int Current_Column;
     int Columns_Number;
     char *Text;
     unsigned long Timepoint;
