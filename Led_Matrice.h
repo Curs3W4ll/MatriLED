@@ -4,6 +4,13 @@
 #include <LedControl.h>
 
 #define MATRICE_NBR 4
+#define SCROLL_DELAY 200
+
+// Return type
+typedef enum {
+    Error = 0,
+    Success = 1,
+} Ret_t;
 
 // Align values
 typedef enum {
@@ -33,6 +40,7 @@ typedef struct {
     int Current_Column;
     int Columns_Number;
     char *Text;
+    byte **Pre_Layout;
     unsigned long Timepoint;
     bool Scroll;
 } Text_t;
