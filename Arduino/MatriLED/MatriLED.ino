@@ -7,13 +7,13 @@ void setup(void)
 {
     Serial.begin(9600);
     Matrice.Text.Align = Left;
-    Matrice.Text.Text = "Hello";
+    Matrice.Text.Text = "Hello I'm Corentin from Epitech";
     Matrice.Text.Scroll_Speed = SCROLL_MEDIUM;
     Init_Matrices(1);
-    (Matrice.ContentInfo[0]).ContentType = Text;
+    (Matrice.ContentInfo[0]).ContentType = Animated_Hearth;
     (Matrice.ContentInfo[1]).ContentType = Text;
     (Matrice.ContentInfo[2]).ContentType = Text;
-    (Matrice.ContentInfo[3]).ContentType = Emoji_t2;
+    (Matrice.ContentInfo[3]).ContentType = Animated_Rain;
     Setup_Matrices();
     Detect_Scroll();
     if (!Matrice.Text.Scroll)
@@ -228,7 +228,7 @@ bool Write_Column(short Position, byte Layout[8], short Layout_Column)
 bool Write_One_Letter(short *Position, byte Layout[8], char letter)
 {
     bool State = true;
-    short i = 8;
+    short i = 7;
 
     for (; i >= 0 && !Column_Not_Empty(Layout, i); i--);
     for (; State && i >= 0; i--, (*Position)--) {
