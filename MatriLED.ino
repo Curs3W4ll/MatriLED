@@ -2,18 +2,20 @@
 #include "Layouts.h"
 
 Main_struct_t Matrice;
+bool IsError = false;
 
 void setup(void)
 {
     Serial.begin(9600);
-    Matrice.Text.Align = Center;
-    Matrice.Text.Text = "3pitech";
+    Matrice.Text.Align = Left;
+    Matrice.Text.Text = "Hello";
     Init_Matrices(1);
-    (Matrice.ContentInfo[0]).ContentType = Animated_Rain;
+    (Matrice.ContentInfo[0]).ContentType = Text;
     (Matrice.ContentInfo[1]).ContentType = Text;
     (Matrice.ContentInfo[2]).ContentType = Text;
-    (Matrice.ContentInfo[3]).ContentType = Animated_Rain;
-    Setup_Matrices();
+    (Matrice.ContentInfo[3]).ContentType = Animated_Hearth;
+    if (!Setup_Matrices())
+        IsError = true;;
     Detect_Scroll();
     if (!Matrice.Text.Scroll)
         Write_NoScroll_Text(Matrice.Text.Text);
@@ -21,9 +23,11 @@ void setup(void)
 
 void loop(void)
 {
-    Display();
-    Update_Animations();
-    Update_Texts();
+    if (!IsError) {
+        Display();
+        Update_Animations();
+        Update_Texts();
+    }
 }
 
 bool Check_Time(unsigned long *Timepoint, int Delay)
@@ -129,7 +133,15 @@ void Setup_One_Matrice(short Matrice_Number)
     }
 }
 
-void Setup_Matrices(void)
+Ret_t Setup_Pre_Layout()
+{
+    Serial.print("Malloc of: ");
+    Serial.println(Matrice.Text.Columns_Number / 8 + 1);
+    Matrice.Text.Pre_Layout = malloc(sizeof(byte *) * (Matrice.Text.Columns_Number / 8 + 1));
+    return Success;
+}
+
+Ret_t Setup_Matrices(void)
 {
     Matrice.Text.Free_Columns = 0;
     for (short i = 0; i < MATRICE_NBR; i++) {
@@ -140,6 +152,7 @@ void Setup_Matrices(void)
     Matrice.Text.Current_Column = 0;
     Matrice.Text.Columns_Number = Get_Text_Columns_Number(Matrice.Text.Text);
     Matrice.Text.Timepoint = millis();
+    return Setup_Pre_Layout();
 }
 
 void Detect_Scroll(void)
@@ -274,7 +287,7 @@ void Update_Texts(void)
 {
     if (!Matrice.Text.Scroll)
         return;
-    if (Check_Time(&Matrice.Text.Timepoint, 200)) {
+    if (Check_Time(&Matrice.Text.Timepoint, SCROLL_DELAY)) {
         for (int i = 0; i < MATRICE_NBR; i++) {
             if ((Matrice.ContentInfo[i]).ContentType == Text)
                 Clear_One_Matrice(i);
