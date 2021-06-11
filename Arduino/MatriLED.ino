@@ -6,13 +6,14 @@ Main_struct_t Matrice;
 void setup(void)
 {
     Serial.begin(9600);
-    Matrice.Text.Align = Center;
-    Matrice.Text.Text = "3pitech";
+    Matrice.Text.Align = Left;
+    Matrice.Text.Text = "Hello";
+    Matrice.Text.Scroll_Speed = SCROLL_MEDIUM;
     Init_Matrices(1);
-    (Matrice.ContentInfo[0]).ContentType = Animated_Rain;
+    (Matrice.ContentInfo[0]).ContentType = Text;
     (Matrice.ContentInfo[1]).ContentType = Text;
     (Matrice.ContentInfo[2]).ContentType = Text;
-    (Matrice.ContentInfo[3]).ContentType = Animated_Rain;
+    (Matrice.ContentInfo[3]).ContentType = Emoji_t2;
     Setup_Matrices();
     Detect_Scroll();
     if (!Matrice.Text.Scroll)
@@ -274,7 +275,7 @@ void Update_Texts(void)
 {
     if (!Matrice.Text.Scroll)
         return;
-    if (Check_Time(&Matrice.Text.Timepoint, 200)) {
+    if (Check_Time(&Matrice.Text.Timepoint, Matrice.Text.Scroll_Speed)) {
         for (int i = 0; i < MATRICE_NBR; i++) {
             if ((Matrice.ContentInfo[i]).ContentType == Text)
                 Clear_One_Matrice(i);
