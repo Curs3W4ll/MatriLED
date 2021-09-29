@@ -1,17 +1,13 @@
 // components/TranslucentTabBar.js
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { BottomTabBar } from '@react-navigation/bottom-tabs';
 import { BlurView } from 'expo-blur';
 
-function CustomTabBar(props) {
+export default function CustomTabBar(props) {
   return (
     <BlurView
-    style={{
-    position: 'absolute',
-      bottom: 0,
-      left: 0,
-      right: 0,
-    }}
+    style={styles.blurView}
     tint="dark"
     intensity={90}>
       <BottomTabBar {...props} />
@@ -19,4 +15,11 @@ function CustomTabBar(props) {
   );
 };
 
-export default CustomTabBar;
+const styles = StyleSheet.create({
+  blurView: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+});

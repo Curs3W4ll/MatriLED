@@ -2,18 +2,16 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-function AddDevice () {
+export default function AddDevice() {
   return (
-    <View style={styles.container}>
+    <View style={styles.mainContainer}>
       <Text style={styles.text}>Add Device</Text>
     </View>
   );
 }
 
-export default AddDevice;
-
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     flex: 1,
     backgroundColor: 'black',
     alignItems: 'center',

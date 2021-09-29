@@ -2,18 +2,16 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-function Help() {
+export default function Help() {
   return (
-    <View style={styles.container}>
+    <View style={styles.mainContainer}>
       <Text style={styles.text}>Help</Text>
     </View>
   );
 }
 
-export default Help;
-
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     flex: 1,
     backgroundColor: 'black',
     alignItems: 'center',

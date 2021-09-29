@@ -1,25 +1,19 @@
 // components/Home.js
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import DevicesList from './DevicesList';
 
-function Home() {
+export default function Home() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Home</Text>
+    <View style={styles.mainContainer}>
+      <DevicesList />
     </View>
   );
 }
 
-export default Home;
-
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     flex: 1,
     backgroundColor: 'black',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    color: 'white',
   },
 });
