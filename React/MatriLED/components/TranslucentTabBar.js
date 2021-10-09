@@ -9,7 +9,7 @@ export default function CustomTabBar(props) {
     <BlurView
     style={styles.blurView}
     tint="dark"
-    intensity={90}>
+    intensity={80}>
       <BottomTabBar {...props} />
     </BlurView>
   );

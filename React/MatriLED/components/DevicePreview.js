@@ -1,6 +1,7 @@
-// components/Device.js
-import React from 'react'
-import { Text, View, StyleSheet, Dimensions, findNodeHandle } from 'react-native'
+// components/DevicePreview.js
+import React from 'react';
+import { Text, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import Slider from '@react-native-community/slider';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons';
@@ -8,11 +9,13 @@ import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons';
 const {height} = Dimensions.get('screen');
 const ITEM_HEIGHT = height * 0.15;
 
-export default class Device extends React.Component {
+export default class DevicePreview extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      luminosity: 0,
+      powerColor: '#c930e5',
       stateBoxLayout: {},
       nameBoxLayout: {},
       luminosityNumberBoxLayout: {},
@@ -21,13 +24,25 @@ export default class Device extends React.Component {
     }
   }
 
+  _pressView() {
+    console.log("Press view");
+  }
+
+  _pressPower() {
+    if (this.state.powerColor === '#c930e5') {
+      this.setState({ powerColor: '#dbbbe1' });
+    } else {
+      this.setState({ powerColor: '#c930e5' });
+    }
+  }
+
   render() {
     return(
-      <View style={styles.mainContainer}>
+      <TouchableOpacity style={styles.mainContainer} onPress={() => this._pressView()}>
         <View style={styles.statusContainer}>
-          <View style={styles.statusBox} onLayout={({ nativeEvent }) => {this.setState({stateBoxLayout: nativeEvent.layout })}}>
-            <FontAwesome5Icon name='power-off' color='#c930e5' size={this.state.stateBoxLayout.width} />
-          </View>
+          <TouchableOpacity style={styles.statusBox} onPress={() => this._pressPower()} onLayout={({ nativeEvent }) => {this.setState({stateBoxLayout: nativeEvent.layout })}}>
+            <FontAwesome5Icon name='power-off' color={this.state.powerColor} size={this.state.stateBoxLayout.width} />
+          </TouchableOpacity>
         </View>
         <View style={styles.infoContainer}>
           <View style={styles.nameContainer}>
@@ -38,10 +53,11 @@ export default class Device extends React.Component {
           <View style={styles.luminosityContainer}>
             <View style={styles.luminosityNumberContainer}>
               <View style={styles.luminosityNumberBox} onLayout={({ nativeEvent }) => {this.setState({luminosityNumberBoxLayout: nativeEvent.layout })}}>
-                <Text style={{fontSize: this.state.luminosityNumberBoxLayout.height, color: 'white'}}>100</Text>
+                <Text style={{fontSize: this.state.luminosityNumberBoxLayout.height, color: 'white'}}>{ this.state.luminosity }</Text>
               </View>
             </View>
             <View style={styles.luminosityBarContainer}>
+              <Slider style={styles.slider} minimumValue={0} maximumValue={100} value={this.state.luminosity} onValueChange={luminosity => this.setState({ luminosity })} step={10} minimumTrackTintColor='#c930e5' maximumTrackTintColor='#dbbbe1' thumbTintColor='#cccccc' tapToSeek='true'/>
             </View>
             <View style={styles.luminosityIconContainer}>
               <View style={styles.luminosityIconBox} onLayout={({ nativeEvent }) => {this.setState({luminosityIconBoxLayout: nativeEvent.layout })}}>
@@ -55,7 +71,7 @@ export default class Device extends React.Component {
             </View>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
@@ -87,7 +103,7 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   nameBox: {
-    flex: 0.8,
+    flex: 0.7,
     marginLeft: '5%',
     marginRight: '10%',
   },
@@ -106,6 +122,9 @@ const styles = StyleSheet.create({
   },
   luminosityBarContainer: {
     flex: 8,
+  },
+  slider: {
+    flex: 1,
   },
   luminosityIconContainer: {
     flex: 2,
