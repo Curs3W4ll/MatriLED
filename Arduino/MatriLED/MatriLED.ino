@@ -10,7 +10,7 @@ void setup(void)
     Matrice.Text.Text = "Hello I'm Corentin from Epitech";
     Matrice.Text.Scroll_Speed = SCROLL_MEDIUM;
     Init_Matrices(1);
-    (Matrice.ContentInfo[0]).ContentType = Animated_Hearth;
+    (Matrice.ContentInfo[0]).ContentType = Text;
     (Matrice.ContentInfo[1]).ContentType = Text;
     (Matrice.ContentInfo[2]).ContentType = Text;
     (Matrice.ContentInfo[3]).ContentType = Animated_Rain;
