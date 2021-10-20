@@ -7,7 +7,7 @@ void setup(void)
 {
     Serial.begin(9600);
     Matrice.Text.Align = Left;
-    Matrice.Text.Text = "Hello I'm Corentin from Epitech";
+    Matrice.Text.Text = "Hello toto";
     Matrice.Text.Scroll_Speed = SCROLL_MEDIUM;
     Init_Matrices(1);
     (Matrice.ContentInfo[0]).ContentType = Text;
