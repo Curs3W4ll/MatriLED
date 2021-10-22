@@ -6,14 +6,14 @@ Main_struct_t Matrice;
 void setup(void)
 {
     Serial.begin(9600);
-    Matrice.Text.Align = Left;
-    Matrice.Text.Text = "Hello toto";
+    Matrice.Text.Align = Center;
+    Matrice.Text.Text = "Hello";
     Matrice.Text.Scroll_Speed = SCROLL_MEDIUM;
     Init_Matrices(1);
     (Matrice.ContentInfo[0]).ContentType = Text;
     (Matrice.ContentInfo[1]).ContentType = Text;
     (Matrice.ContentInfo[2]).ContentType = Text;
-    (Matrice.ContentInfo[3]).ContentType = Animated_Rain;
+    (Matrice.ContentInfo[3]).ContentType = Text;
     Setup_Matrices();
     Detect_Scroll();
     if (!Matrice.Text.Scroll)
@@ -45,13 +45,14 @@ void Init_Matrices(short Intensity)
     }
 }
 
-bool Column_Not_Empty(byte Layout[], short Pos)
+bool Column_Empty(byte Layout[], short Pos)
 {
+    Pos = 7 - Pos; // Invert position to read in binary (because in binary pos 0 = most right bit)
     for (short i = 0; i < 8; i++) {
         if (bitRead(Layout[i], Pos) == 1)
-            return true;
+            return false;
     }
-    return false;
+    return true;
 }
 
 void Clear_One_Matrice(short Matrice_Number)
@@ -132,20 +133,20 @@ void Setup_One_Matrice(short Matrice_Number)
 
 void Setup_Matrices(void)
 {
-    Matrice.Text.Free_Columns = 0;
+    Matrice.Text.Usable_Columns = 0;
     for (short i = 0; i < MATRICE_NBR; i++) {
         Setup_One_Matrice(i);
         if ((Matrice.ContentInfo[i]).ContentType == Text)
-            Matrice.Text.Free_Columns += 8;
+            Matrice.Text.Usable_Columns += 8;
     }
     Matrice.Text.Current_Column = 0;
-    Matrice.Text.Columns_Number = Get_Text_Columns_Number(Matrice.Text.Text);
+    Matrice.Text.Text_Columns_Length = Get_Text_Text_Columns_Length(Matrice.Text.Text);
     Matrice.Text.Timepoint = millis();
 }
 
 void Detect_Scroll(void)
 {
-    if (Matrice.Text.Columns_Number > Matrice.Text.Free_Columns)
+    if (Matrice.Text.Text_Columns_Length > Matrice.Text.Usable_Columns)
         Matrice.Text.Scroll = true;
     else
         Matrice.Text.Scroll = false;
@@ -179,39 +180,42 @@ void Update_Animations(void)
 
 short Get_Layout_Colums_Number(byte Layout[8])
 {
-    short i = 0;
     short Count = 0;
+    short i = 0;
 
-    for (;Column_Not_Empty(Layout, i); i++, Count++);
+    for (; Column_Empty(Layout, i); i++);
+    for (; i < 8 && !Column_Empty(Layout, i); i++, Count++);
     return Count;
 }
 
-short Get_Letter_Columns_Number(const char c)
+short Get_Letter_Text_Columns_Length(const char c)
 {
     return Get_Layout_Colums_Number(Ascii_Layouts[c - 32]);
 }
 
-short Get_Text_Columns_Number(const char *Text)
+short Get_Text_Text_Columns_Length(const char *Text)
 {
     short Count = -1;
 
     for (short i = 0; Text[i]; i++) {
-        Count += Get_Letter_Columns_Number(Text[i]) + 1;
+        Count += Get_Letter_Text_Columns_Length(Text[i]) + 1;
     }
     return Count;
 }
 
-bool Write_Column(short Position, byte Layout[8], short Layout_Column)
+bool Write_Column(short Text_Global_Column, byte Layout[8], short Layout_Column)
 {
     short Matrice_Number = -1;
-    short Column_Position = Position;
+    short Matrice_Column_Position = Text_Global_Column;
 
-    if (Position >= Matrice.Text.Free_Columns || Position < 0)
+    if (Text_Global_Column >= Matrice.Text.Usable_Columns)
+        return false;
+    else if (Text_Global_Column < 0)
         return true;
-    for (short i = MATRICE_NBR - 1; i >= 0; i--) {
+    for (short i = 0; i < MATRICE_NBR; i++) {
         if ((Matrice.ContentInfo[i]).ContentType == Text) {
-            if (Column_Position >= 8)
-                Column_Position -= 8;
+            if (Matrice_Column_Position >= 8)
+                Matrice_Column_Position -= 8;
             else {
                 Matrice_Number = i;
                 break;
@@ -220,32 +224,47 @@ bool Write_Column(short Position, byte Layout[8], short Layout_Column)
     }
     if (Matrice_Number == -1)
         return false;
-    for (short i = 0; i < 8; i++)
-        bitWrite(Matrice.Content[Matrice_Number][i], Column_Position, bitRead(Layout[i], Layout_Column));
+    Matrice_Column_Position = 7 - Matrice_Column_Position;
+    Layout_Column = 7 - Layout_Column;
+    for (short Layout_Line = 0; Layout_Line < 8; Layout_Line++)
+        bitWrite(Matrice.Content[Matrice_Number][Layout_Line], Matrice_Column_Position, bitRead(Layout[Layout_Line], Layout_Column));
     return true;
 }
 
-bool Write_One_Letter(short *Position, byte Layout[8], char letter)
+bool Write_One_Letter(short *Text_Global_Column, byte Letter_Layout[8])
 {
     bool State = true;
-    short i = 7;
+    short Layout_Column = 0;
 
-    for (; i >= 0 && !Column_Not_Empty(Layout, i); i--);
-    for (; State && i >= 0; i--, (*Position)--) {
-        State = Write_Column(*Position, Layout, i);
+    Serial.print("Get_Layout_Colums_Number: ");
+    Serial.println(Get_Layout_Colums_Number(Letter_Layout));
+    for (; Column_Empty(Letter_Layout, Layout_Column); Layout_Column++);
+    for (; Layout_Column < 8; Layout_Column++) {
+        Serial.print("Print ");
+        Serial.print(Layout_Column + 1);
+        Serial.print(" column(s) at global postion ");
+        Serial.println(*Text_Global_Column);
+        State = Write_Column(*Text_Global_Column, Letter_Layout, Layout_Column);
+        (*Text_Global_Column)++;
     }
     return State;
 }
 
-void Write_Text(short Position, const char *Text)
+void Write_Text(short Text_Global_Column, const char *Text)
 {
     bool State = true;
 
     for (short i = 0; State && Text[i]; i++) {
-        if (i) {
-            Position--;
-        }
-        State = Write_One_Letter(&Position, Ascii_Layouts[Text[i] - 32], Text[i]);
+        if (i)
+            Text_Global_Column++;
+        Serial.print("Start ");
+        Serial.println(Text[i]);
+        State = Write_One_Letter(&Text_Global_Column, Ascii_Layouts[Text[i] - 32]);
+        Serial.print("Print ");
+        Serial.print(i + 1);
+        Serial.print(" letter(s)(");
+        Serial.print(Text[i]);
+        Serial.println(")");
     }
 }
 
@@ -255,19 +274,20 @@ void Write_NoScroll_Text(const char *Text)
 
     switch (Matrice.Text.Align) {
         case Left:
-            Start_Column = Matrice.Text.Free_Columns;
+            Start_Column = 0;
             break;
         case Right:
-            Start_Column = Matrice.Text.Columns_Number;
+            Start_Column = Matrice.Text.Usable_Columns - Matrice.Text.Text_Columns_Length;
             break;
         case Center:
-            Start_Column = (Matrice.Text.Columns_Number / 2) + (Matrice.Text.Free_Columns / 2);
+            Start_Column = (Matrice.Text.Usable_Columns - Matrice.Text.Text_Columns_Length) / 2;
             break;
         default:
-            Start_Column = Matrice.Text.Free_Columns;
+            Start_Column = 0;
             break;
     }
-    Start_Column--;
+    Serial.print("Start column: ");
+    Serial.println(Start_Column);
     Write_Text(Start_Column, Text);
 }
 
@@ -281,7 +301,7 @@ void Update_Texts(void)
                 Clear_One_Matrice(i);
         }
         Write_Text(Matrice.Text.Current_Column, Matrice.Text.Text);
-        if (Matrice.Text.Current_Column >= Matrice.Text.Free_Columns + Matrice.Text.Columns_Number - 1)
+        if (Matrice.Text.Current_Column >= Matrice.Text.Usable_Columns + Matrice.Text.Text_Columns_Length - 1)
             Matrice.Text.Current_Column = 0;
         else
             (Matrice.Text.Current_Column)++;
