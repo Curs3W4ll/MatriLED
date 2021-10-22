@@ -12,5 +12,7 @@ build:
     - /builds/curs3_w4ll/matriled/bin/arduino-cli core install arduino:avr
     - /builds/curs3_w4ll/matriled/bin/arduino-cli lib install LedControl
     - /builds/curs3_w4ll/matriled/bin/arduino-cli compile -b arduino:avr:uno --build-path "Arduino/MatriLED/build" -v "Arduino/MatriLED/Matriled.ino"
+  only:
+    - Arduino
 
 ...
