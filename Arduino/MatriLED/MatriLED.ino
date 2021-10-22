@@ -236,14 +236,8 @@ bool Write_One_Letter(short *Text_Global_Column, byte Letter_Layout[8])
     bool State = true;
     short Layout_Column = 0;
 
-    Serial.print("Get_Layout_Colums_Number: ");
-    Serial.println(Get_Layout_Colums_Number(Letter_Layout));
     for (; Column_Empty(Letter_Layout, Layout_Column); Layout_Column++);
     for (; Layout_Column < 8; Layout_Column++) {
-        Serial.print("Print ");
-        Serial.print(Layout_Column + 1);
-        Serial.print(" column(s) at global postion ");
-        Serial.println(*Text_Global_Column);
         State = Write_Column(*Text_Global_Column, Letter_Layout, Layout_Column);
         (*Text_Global_Column)++;
     }
@@ -257,14 +251,7 @@ void Write_Text(short Text_Global_Column, const char *Text)
     for (short i = 0; State && Text[i]; i++) {
         if (i)
             Text_Global_Column++;
-        Serial.print("Start ");
-        Serial.println(Text[i]);
         State = Write_One_Letter(&Text_Global_Column, Ascii_Layouts[Text[i] - 32]);
-        Serial.print("Print ");
-        Serial.print(i + 1);
-        Serial.print(" letter(s)(");
-        Serial.print(Text[i]);
-        Serial.println(")");
     }
 }
 
@@ -286,8 +273,6 @@ void Write_NoScroll_Text(const char *Text)
             Start_Column = 0;
             break;
     }
-    Serial.print("Start column: ");
-    Serial.println(Start_Column);
     Write_Text(Start_Column, Text);
 }
 
