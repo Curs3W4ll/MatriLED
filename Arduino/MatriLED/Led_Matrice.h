@@ -32,13 +32,13 @@ LedControl lc=LedControl(2,4,3,MATRICE_NBR); //DATA-CLK-LOAD
 // Text structure
 typedef struct {
     Align_t Align;
-    short Free_Columns;
+    short Usable_Columns;
     int Current_Column;
-    int Columns_Number;
+    int Text_Columns_Length;
     char *Text;
     unsigned long Timepoint;
     bool Scroll;
-    short Scroll_Speed;
+    int Scroll_Speed;
 } Text_t;
 
 // Animation structures
