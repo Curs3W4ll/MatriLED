@@ -5,7 +5,7 @@ stages:
 
 build:
   stage: build
-  image: arduino/arduino-cli
+  image: alpine
   script:
     - arduino-cli compile -b arduino:avr:uno --build-path "Arduino/MatriLED/build" -v "Arduino/MatriLED/Matriled.ino"
 
