@@ -81,9 +81,9 @@ byte Ascii_Layouts[][8] =
 },
 {
     B00,
-    B10,
-    B10,
     B01,
+    B01,
+    B10,
     B00,
     B00,
     B00,
