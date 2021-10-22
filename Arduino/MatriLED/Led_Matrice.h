@@ -4,6 +4,7 @@
 #include <LedControl.h>
 
 #define MATRICE_NBR 4
+
 #define SCROLL_SLOW 300
 #define SCROLL_MEDIUM 200
 #define SCROLL_FAST 100
