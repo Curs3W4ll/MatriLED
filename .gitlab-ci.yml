@@ -9,6 +9,6 @@ build:
   script:
     - apt-get update && apt-get install -y curl
     - curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
-    - arduino-cli compile -b arduino:avr:uno --build-path "Arduino/MatriLED/build" -v "Arduino/MatriLED/Matriled.ino"
+    - /builds/curs3_w4ll/matriled/bin/arduino-cli compile -b arduino:avr:uno --build-path "Arduino/MatriLED/build" -v "Arduino/MatriLED/Matriled.ino"
 
 ...
