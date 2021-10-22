@@ -7,7 +7,7 @@ void setup(void)
 {
     Serial.begin(9600);
     Matrice.Text.Align = Center;
-    Matrice.Text.Text = "Hello";
+    Matrice.Text.Text = "Hello World !";
     Matrice.Text.Scroll_Speed = SCROLL_MEDIUM;
     Init_Matrices(1);
     (Matrice.ContentInfo[0]).ContentType = Text;
