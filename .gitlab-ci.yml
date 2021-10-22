@@ -5,8 +5,10 @@ stages:
 
 build:
   stage: build
-  image: alpine
+  image: debian:latest
   script:
+    - apt-get update && apt-get install -y curl
+    - curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh
     - arduino-cli compile -b arduino:avr:uno --build-path "Arduino/MatriLED/build" -v "Arduino/MatriLED/Matriled.ino"
 
 ...
