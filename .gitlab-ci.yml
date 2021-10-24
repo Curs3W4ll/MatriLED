@@ -2,7 +2,6 @@
 
 stages:
   - build
-  - test
 
 build:
   stage: build
@@ -14,15 +13,6 @@ build:
     expire_in: 1 hour
     paths:
       - React/MatriLED/node_modules
-  only:
-    - Mobile-Application
-
-test:
-  stage: test
-  image: node:alpine
-  script:
-    - cd React/MatriLED
-    - npm test
   only:
     - Mobile-Application
 
