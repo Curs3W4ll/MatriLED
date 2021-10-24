@@ -15,11 +15,15 @@ build:
       paths:
         - build
         - node_modules/
+  only:
+    - Mobile-Application
 
 test:
   stage: test
   image: node
   script:
     - CI=true npm test
+  only:
+    - Mobile-Application
 
 ...
