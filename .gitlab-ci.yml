@@ -21,6 +21,7 @@ test:
   stage: test
   image: node:alpine
   script:
+    - cd React/MatriLED
     - npx jest --ci
   only:
     - Mobile-Application
