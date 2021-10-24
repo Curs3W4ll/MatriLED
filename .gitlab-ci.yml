@@ -22,7 +22,7 @@ test:
   image: node:alpine
   script:
     - cd React/MatriLED
-    - npx jest --ci
+    - npm test
   only:
     - Mobile-Application
 
