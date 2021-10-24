@@ -10,11 +10,11 @@ build:
   script:
     - npm install
     - npm build
-    artifacts:
-      expire_in: 1 hour
-      paths:
-        - build
-        - node_modules/
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - build
+      - node_modules/
   only:
     - Mobile-Application
 
