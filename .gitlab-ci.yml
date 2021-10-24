@@ -6,24 +6,22 @@ stages:
 
 build:
   stage: build
-  image: node
+  image: node:alpine
   script:
     - cd React/MatriLED
-    - npm install
-    - npm build
+    - npm ci
   artifacts:
     expire_in: 1 hour
     paths:
-      - React/MatriLED/build
-      - React/MatriLED/node_modules/
+      - React/MatriLED/
   only:
     - Mobile-Application
 
 test:
   stage: test
-  image: node
+  image: node:alpine
   script:
-    - CI=true npm test
+    - npx jest --ci
   only:
     - Mobile-Application
 
