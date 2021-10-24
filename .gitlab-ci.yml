@@ -8,13 +8,14 @@ build:
   stage: build
   image: node
   script:
+    - cd React/MatriLED
     - npm install
     - npm build
   artifacts:
     expire_in: 1 hour
     paths:
-      - build
-      - node_modules/
+      - React/MatriLED/build
+      - React/MatriLED/node_modules/
   only:
     - Mobile-Application
 
