@@ -7,7 +7,7 @@ void setup(void)
 {
     Serial.begin(9600);
     Matrice.Text.Align = Center;
-    Matrice.Text.Text = "Hello World !";
+    Matrice.Text.Text = "Hello a";
     Matrice.Text.Scroll_Speed = SCROLL_MEDIUM;
     Init_Matrices(1);
     (Matrice.ContentInfo[0]).ContentType = Text;
@@ -183,7 +183,7 @@ short Get_Layout_Colums_Number(byte Layout[8])
     short Count = 0;
     short i = 0;
 
-    for (; Column_Empty(Layout, i); i++);
+    for (; i < 8 && Column_Empty(Layout, i); i++);
     for (; i < 8 && !Column_Empty(Layout, i); i++, Count++);
     return Count;
 }
@@ -236,7 +236,7 @@ bool Write_One_Letter(short *Text_Global_Column, byte Letter_Layout[8])
     bool State = true;
     short Layout_Column = 0;
 
-    for (; Column_Empty(Letter_Layout, Layout_Column); Layout_Column++);
+    for (; Layout_Column < 8 && Column_Empty(Letter_Layout, Layout_Column); Layout_Column++);
     for (; Layout_Column < 8; Layout_Column++) {
         State = Write_Column(*Text_Global_Column, Letter_Layout, Layout_Column);
         (*Text_Global_Column)++;
