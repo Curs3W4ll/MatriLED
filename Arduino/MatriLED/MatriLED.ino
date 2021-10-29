@@ -7,7 +7,7 @@ void setup(void)
 {
     Serial.begin(9600);
     Matrice.Text.Align = Center;
-    Matrice.Text.Text = "Hello a";
+    Matrice.Text.Text = "Hello !";
     Matrice.Text.Scroll_Speed = SCROLL_MEDIUM;
     Init_Matrices(1);
     (Matrice.ContentInfo[0]).ContentType = Text;
@@ -251,7 +251,10 @@ void Write_Text(short Text_Global_Column, const char *Text)
     for (short i = 0; State && Text[i]; i++) {
         if (i)
             Text_Global_Column++;
-        State = Write_One_Letter(&Text_Global_Column, Ascii_Layouts[Text[i] - 32]);
+        if (Text[i] == ' ')
+            Text_Global_Column++;
+        else
+            State = Write_One_Letter(&Text_Global_Column, Ascii_Layouts[Text[i] - 32]);
     }
 }
 
