@@ -1,11 +1,10 @@
-// components/Help.js
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 
-export default function Help() {
+export default function DeviceDetails() {
   return (
     <View style={styles.mainContainer}>
-      <Text style={styles.text}>Help</Text>
+      <Text style={styles.text}>Device details</Text>
     </View>
   );
 }

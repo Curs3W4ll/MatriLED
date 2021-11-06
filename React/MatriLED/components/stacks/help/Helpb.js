@@ -1,12 +1,9 @@
-// components/Home.js
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import DevicesList from './DevicesList';
 
-export default function Home() {
-  return (
+export default function Helpb() {
+  return(
     <View style={styles.mainContainer}>
-      <DevicesList />
     </View>
   );
 }
@@ -14,6 +11,6 @@ export default function Home() {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: 'green',
   },
 });

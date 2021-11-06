@@ -1,4 +1,3 @@
-// components/DevicesList.js
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';

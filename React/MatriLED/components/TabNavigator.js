@@ -1,13 +1,12 @@
-// components/TabNavigator.js
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import TranslucentTabBar from './TranslucentTabBar';
-import Home from './Home';
-import AddDevice from './AddDevice';
-import Help from './Help';
+import DevicesRoot from './stacks/devices/DevicesRoot';
+import AddDeviceRoot from './stacks/adddevice/AddDeviceRoot';
+import HelpRoot from './stacks/help/HelpRoot';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,13 +14,10 @@ const screenOptions = (route, color, size) => {
   switch (route.name) {
     case 'Devices':
       return <AntDesignIcon name={'home'} color={color} size={size}/>;
-      break;
     case 'Add Device':
       return <EntypoIcon name={'plus'} color={color} size={size}/>;
-      break;
     case 'Help':
       return <EntypoIcon name={'help'} color={color} size={size}/>;
-      break;
     default:
       break;
   }
@@ -40,11 +36,12 @@ export default function TabNavigator() {
       tabBarStyle: styles.tabBar,
       headerTintColor: 'white',
       headerStyle: { backgroundColor: 'black' },
+      headerShown: false,
     })}
     >
-      <Tab.Screen name="Devices" component={Home} />
-      <Tab.Screen name="Add Device" component={AddDevice} />
-      <Tab.Screen name="Help" component={Help} />
+      <Tab.Screen name="Devices" component={DevicesRoot} />
+      <Tab.Screen name="Add Device" component={AddDeviceRoot} />
+      <Tab.Screen name="Help" component={HelpRoot} />
     </Tab.Navigator>
   );
 };

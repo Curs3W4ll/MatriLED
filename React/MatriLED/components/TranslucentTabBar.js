@@ -1,4 +1,3 @@
-// components/TranslucentTabBar.js
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { BottomTabBar } from '@react-navigation/bottom-tabs';

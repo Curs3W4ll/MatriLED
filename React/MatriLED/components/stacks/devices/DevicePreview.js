@@ -1,4 +1,3 @@
-// components/DevicePreview.js
 import React from 'react';
 import { Text, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Slider from '@react-native-community/slider';
