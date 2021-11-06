@@ -26,9 +26,41 @@ The led matric I used: [Matrice Led MAX7219](https://fr.aliexpress.com/item/3262
 
 ---
 
+# Branch naming convention
+
+Branches names should look like this:
+
+`<issue-number>_<parent-branch>_<issue-summary>`
+
+## Convention
+
+### `issue-number`
+
+The id of the issue the branch is created for work on
+
+### `parent-branch`
+
+The name of the branch this branch will be merged to (and often is created from)
+
+It is often the 'category' of the work
+
+### `issue-summary`
+
+The summary of the issue the branch is created for
+
+## Examples
+
+### Branch to do #13 issue and is from `Arduino` branch to create a clock
+
+`13_Arduino_Create-clock`
+
+### Branch to do #7 issue and is from `UI` branch to create auth page
+
+`7_UI_Create-auth-page`
+
 # Commit convention
 
-Commit should look like this:
+Commits should look like this:
 
 `<type>([scope]): <description> [#<issue-number>]`
 
@@ -85,8 +117,8 @@ Or just describe in details the problem you are fixing / you find
 
 ### Commiting a bugfix
 
-`fix(keyboard): Removing the blinking effect what pressing keys #54`
+`fix(keyboard): Removing the blinking effect when pressing keys #54`
 
 ### Commiting new tests
 
-`test(authentication): Adding full test on the authetication`
+`test(authentication): Adding full test on the authentication`
