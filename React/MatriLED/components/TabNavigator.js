@@ -12,7 +12,7 @@ const Tab = createBottomTabNavigator();
 
 const screenOptions = (route, color, size) => {
   switch (route.name) {
-    case 'Devices':
+    case 'Devices List':
       return <AntDesignIcon name={'home'} color={color} size={size}/>;
     case 'Add Device':
       return <EntypoIcon name={'plus'} color={color} size={size}/>;
@@ -39,7 +39,7 @@ export default function TabNavigator() {
       headerShown: false,
     })}
     >
-      <Tab.Screen name="Devices" component={DevicesRoot} />
+      <Tab.Screen name="Devices List" component={DevicesRoot} />
       <Tab.Screen name="Add Device" component={AddDeviceRoot} />
       <Tab.Screen name="Help" component={HelpRoot} />
     </Tab.Navigator>
