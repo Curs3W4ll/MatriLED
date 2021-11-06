@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Slider from '@react-native-community/slider';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
@@ -8,71 +8,57 @@ import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons';
 const {height} = Dimensions.get('screen');
 const ITEM_HEIGHT = height * 0.15;
 
-export default class DevicePreview extends React.Component {
+export default function DevicePreview({ navigation }) {
+  const [luminosity, setLuminosity] = useState(0);
+  const [powerColor, setPowerColor] = useState('#c930e5');
+  const [stateBoxLayout, setStateBoxLayout] = useState({});
+  const [nameBoxLayout, setNameBoxLayout] = useState({});
+  const [luminosityNumberBoxLayout, setLuminosityNumberBoxLayout] = useState({});
+  const [luminosityIconBoxLayout, setLuminosityIconBoxLayout] = useState({});
+  const [arrowBoxLayout, setArrowBoxLayout] = useState({});
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      luminosity: 0,
-      powerColor: '#c930e5',
-      stateBoxLayout: {},
-      nameBoxLayout: {},
-      luminosityNumberBoxLayout: {},
-      luminosityIconBoxLayout: {},
-      arrowBoxLayout: {},
-    }
+  function swapPowerColor() {
+    if (powerColor === '#c930e5')
+      setPowerColor('#dbbbe1');
+    else
+      setPowerColor('#c930e5');
   }
-
-  _pressView() {
-    console.log("Press view");
-  }
-
-  _pressPower() {
-    if (this.state.powerColor === '#c930e5') {
-      this.setState({ powerColor: '#dbbbe1' });
-    } else {
-      this.setState({ powerColor: '#c930e5' });
-    }
-  }
-
-  render() {
-    return(
-      <TouchableOpacity style={styles.mainContainer} onPress={() => this._pressView()}>
-        <View style={styles.statusContainer}>
-          <TouchableOpacity style={styles.statusBox} onPress={() => this._pressPower()} onLayout={({ nativeEvent }) => {this.setState({stateBoxLayout: nativeEvent.layout })}}>
-            <FontAwesome5Icon name='power-off' color={this.state.powerColor} size={this.state.stateBoxLayout.width} />
-          </TouchableOpacity>
+  return(
+    <TouchableOpacity style={styles.mainContainer} onPress={() => navigation.navigate("Device")}>
+      <View style={styles.statusContainer}>
+        <TouchableOpacity style={styles.statusBox} onPress={() => swapPowerColor()} onLayout={({ nativeEvent }) => {setStateBoxLayout(nativeEvent.layout) }}>
+          <FontAwesome5Icon name='power-off' color={powerColor} size={stateBoxLayout.width} />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.infoContainer}>
+        <View style={styles.nameContainer}>
+          <View style={styles.nameBox} onLayout={({ nativeEvent }) => {setNameBoxLayout(nativeEvent.layout)}}>
+            <Text style={{fontSize: nameBoxLayout.height, color: 'white'}} numberOfLines={1}>Device name too long</Text>
+          </View>
         </View>
-        <View style={styles.infoContainer}>
-          <View style={styles.nameContainer}>
-            <View style={styles.nameBox} onLayout={({ nativeEvent }) => {this.setState({nameBoxLayout: nativeEvent.layout })}}>
-              <Text style={{fontSize: this.state.nameBoxLayout.height, color: 'white'}} numberOfLines={1}>Device name too long</Text>
+        <View style={styles.luminosityContainer}>
+          <View style={styles.luminosityNumberContainer}>
+            <View style={styles.luminosityNumberBox} onLayout={({ nativeEvent }) => {setLuminosityNumberBoxLayout(nativeEvent.layout)}}>
+              <Text style={{fontSize: luminosityNumberBoxLayout.height, color: 'white'}}>{ luminosity }</Text>
             </View>
           </View>
-          <View style={styles.luminosityContainer}>
-            <View style={styles.luminosityNumberContainer}>
-              <View style={styles.luminosityNumberBox} onLayout={({ nativeEvent }) => {this.setState({luminosityNumberBoxLayout: nativeEvent.layout })}}>
-                <Text style={{fontSize: this.state.luminosityNumberBoxLayout.height, color: 'white'}}>{ this.state.luminosity }</Text>
-              </View>
+          <View style={styles.luminosityBarContainer}>
+            <Slider style={styles.slider} minimumValue={0} maximumValue={100} value={luminosity} onValueChange={value => setLuminosity(value)} step={10} minimumTrackTintColor='#c930e5' maximumTrackTintColor='#dbbbe1' thumbTintColor='#cccccc' tapToSeek='true'/>
+          </View>
+          <View style={styles.luminosityIconContainer}>
+            <View style={styles.luminosityIconBox} onLayout={({ nativeEvent }) => {setLuminosityIconBoxLayout(nativeEvent.layout)}}>
+              <FeatherIcon name='sun' color='#c930e5' size={luminosityIconBoxLayout.width} />
             </View>
-            <View style={styles.luminosityBarContainer}>
-              <Slider style={styles.slider} minimumValue={0} maximumValue={100} value={this.state.luminosity} onValueChange={luminosity => this.setState({ luminosity })} step={10} minimumTrackTintColor='#c930e5' maximumTrackTintColor='#dbbbe1' thumbTintColor='#cccccc' tapToSeek='true'/>
-            </View>
-            <View style={styles.luminosityIconContainer}>
-              <View style={styles.luminosityIconBox} onLayout={({ nativeEvent }) => {this.setState({luminosityIconBoxLayout: nativeEvent.layout })}}>
-                <FeatherIcon name='sun' color='#c930e5' size={this.state.luminosityIconBoxLayout.width} />
-              </View>
-            </View>
-            <View style={styles.arrowContainer}>
-              <View style={styles.arrowBox} onLayout={({ nativeEvent }) => {this.setState({arrowBoxLayout: nativeEvent.layout })}}>
-                <SimpleLineIcon name='arrow-right' color='#cccccc' size={this.state.arrowBoxLayout.width} />
-              </View>
+          </View>
+          <View style={styles.arrowContainer}>
+            <View style={styles.arrowBox} onLayout={({ nativeEvent }) => {setArrowBoxLayout(nativeEvent.layout)}}>
+              <SimpleLineIcon name='arrow-right' color='#cccccc' size={arrowBoxLayout.width} />
             </View>
           </View>
         </View>
-      </TouchableOpacity>
-    );
-  }
+      </View>
+    </TouchableOpacity>
+  );
 }
 
 const styles = StyleSheet.create({
