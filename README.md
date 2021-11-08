@@ -12,6 +12,10 @@ An arduino displayer controlled by a mobile application with bluetooth
 
 ---
 
+[![pipeline status](https://gitlab.com/curs3_w4ll/matriled/badges/master/pipeline.svg)](https://gitlab.com/curs3_w4ll/matriled/-/commits/master)
+
+[![coverage report](https://gitlab.com/curs3_w4ll/matriled/badges/master/coverage.svg)](https://gitlab.com/curs3_w4ll/matriled/-/commits/master)
+
 ## Arduino setup
 
 ### Preview
