@@ -1,10 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useTheme } from '../../../contexts/ThemeProvider';
 
 export default function Settings() {
+  const { theme } = useTheme();
+
   return(
-    <View style={styles.mainContainer}>
-      <Text style={{color:'white'}}>Settings</Text>
+    <View style={[styles.mainContainer, {backgroundColor: theme.background}]}>
+      <Text style={{color: theme.text}}>Settings</Text>
     </View>
   );
 }
@@ -12,7 +15,6 @@ export default function Settings() {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
   }

@@ -4,13 +4,15 @@ import Slider from '@react-native-community/slider';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons';
+import { useTheme } from '../../../contexts/ThemeProvider';
 
 const {height} = Dimensions.get('screen');
 const ITEM_HEIGHT = height * 0.15;
 
 export default function DevicePreview({ navigation }) {
+  const { theme } = useTheme();
   const [luminosity, setLuminosity] = useState(0);
-  const [powerColor, setPowerColor] = useState('#c930e5');
+  const [powerColor, setPowerColor] = useState(theme.main);
   const [stateBoxLayout, setStateBoxLayout] = useState({});
   const [nameBoxLayout, setNameBoxLayout] = useState({});
   const [luminosityNumberBoxLayout, setLuminosityNumberBoxLayout] = useState({});
@@ -18,13 +20,13 @@ export default function DevicePreview({ navigation }) {
   const [arrowBoxLayout, setArrowBoxLayout] = useState({});
 
   function swapPowerColor() {
-    if (powerColor === '#c930e5')
-      setPowerColor('#dbbbe1');
+    if (powerColor === theme.main)
+      setPowerColor(theme.sub);
     else
-      setPowerColor('#c930e5');
+      setPowerColor(theme.main);
   }
   return(
-    <TouchableOpacity style={styles.mainContainer} onPress={() => navigation.navigate("Device")}>
+    <TouchableOpacity style={[styles.mainContainer, {borderColor: theme.annex}]} onPress={() => navigation.navigate("Device")}>
       <View style={styles.statusContainer}>
         <TouchableOpacity style={styles.statusBox} onPress={() => swapPowerColor()} onLayout={({ nativeEvent }) => {setStateBoxLayout(nativeEvent.layout) }}>
           <FontAwesome5Icon name='power-off' color={powerColor} size={stateBoxLayout.width} />
@@ -33,26 +35,26 @@ export default function DevicePreview({ navigation }) {
       <View style={styles.infoContainer}>
         <View style={styles.nameContainer}>
           <View style={styles.nameBox} onLayout={({ nativeEvent }) => {setNameBoxLayout(nativeEvent.layout)}}>
-            <Text style={{fontSize: nameBoxLayout.height, color: 'white'}} numberOfLines={1}>Device name too long</Text>
+            <Text style={{fontSize: nameBoxLayout.height, color: theme.text}} numberOfLines={1}>Device name too long</Text>
           </View>
         </View>
         <View style={styles.luminosityContainer}>
           <View style={styles.luminosityNumberContainer}>
             <View style={styles.luminosityNumberBox} onLayout={({ nativeEvent }) => {setLuminosityNumberBoxLayout(nativeEvent.layout)}}>
-              <Text style={{fontSize: luminosityNumberBoxLayout.height, color: 'white'}}>{ luminosity }</Text>
+              <Text style={{fontSize: luminosityNumberBoxLayout.height, color: theme.text}}>{ luminosity }</Text>
             </View>
           </View>
           <View style={styles.luminosityBarContainer}>
-            <Slider style={styles.slider} minimumValue={0} maximumValue={100} value={luminosity} onValueChange={value => setLuminosity(value)} step={10} minimumTrackTintColor='#c930e5' maximumTrackTintColor='#dbbbe1' thumbTintColor='#cccccc' tapToSeek='true'/>
+            <Slider style={styles.slider} minimumValue={0} maximumValue={100} value={luminosity} onValueChange={value => setLuminosity(value)} step={10} minimumTrackTintColor={theme.main} maximumTrackTintColor={theme.sub} thumbTintColor={theme.annex} tapToSeek='true'/>
           </View>
           <View style={styles.luminosityIconContainer}>
             <View style={styles.luminosityIconBox} onLayout={({ nativeEvent }) => {setLuminosityIconBoxLayout(nativeEvent.layout)}}>
-              <FeatherIcon name='sun' color='#c930e5' size={luminosityIconBoxLayout.width} />
+              <FeatherIcon name='sun' color={theme.main} size={luminosityIconBoxLayout.width} />
             </View>
           </View>
           <View style={styles.arrowContainer}>
             <View style={styles.arrowBox} onLayout={({ nativeEvent }) => {setArrowBoxLayout(nativeEvent.layout)}}>
-              <SimpleLineIcon name='arrow-right' color='#cccccc' size={arrowBoxLayout.width} />
+              <SimpleLineIcon name='arrow-right' color={theme.annex} size={arrowBoxLayout.width} />
             </View>
           </View>
         </View>
@@ -66,7 +68,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     height: ITEM_HEIGHT,
-    borderColor: '#cccccc',
     borderTopWidth: 1,
     borderBottomWidth: 1,
   },

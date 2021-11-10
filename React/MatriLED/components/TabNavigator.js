@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useTheme } from '../contexts/ThemeProvider';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TranslucentTabBar from './TranslucentTabBar';
 import DevicesRoot from './pages/devices/DevicesRoot';
 import AddDeviceRoot from './pages/adddevice/AddDeviceRoot';
@@ -24,6 +25,8 @@ const screenOptions = (route, color, size) => {
 }
 
 export default function TabNavigator() {
+  const { theme } = useTheme();
+
   return (
     <Tab.Navigator
     tabBar={(props) => <TranslucentTabBar {...props} />}
@@ -31,9 +34,9 @@ export default function TabNavigator() {
     screenOptions={({route}) => ({
       tabBarShowLabel: false,
       tabBarIcon: ({color, size}) => screenOptions(route, color, size),
-      tabBarActiveTintColor: '#c930e5',
-      tabBarInactiveTintColor: 'white',
-      tabBarStyle: styles.tabBar,
+      tabBarActiveTintColor: theme.main,
+      tabBarInactiveTintColor: theme.text,
+      tabBarStyle: [styles.tabBar, {borderTopColor: theme.annex}],
       headerShown: false,
     })}
     >
@@ -46,7 +49,6 @@ export default function TabNavigator() {
 
 const styles = StyleSheet.create({
   tabBar: {
-    borderTopColor: '#cccccc',
     backgroundColor: 'transparent',
   },
 });
