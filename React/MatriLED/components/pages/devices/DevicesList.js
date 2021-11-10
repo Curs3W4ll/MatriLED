@@ -1,13 +1,15 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { useTheme } from '../../../contexts/ThemeProvider';
 import DevicePreview from './DevicePreview';
 
 export default function DevicesList({ navigation }) {
+  const { theme } = useTheme();
   const TABBARHEIGHT = useBottomTabBarHeight();
 
   return(
-    <ScrollView style={styles.scrollView} contentContainerStyle={[{paddingBottom: TABBARHEIGHT}]}>
+    <ScrollView style={[styles.scrollView], { backgroundColor: theme.background }} contentContainerStyle={[{paddingBottom: TABBARHEIGHT}]}>
       <DevicePreview navigation={navigation}/>
       <DevicePreview navigation={navigation}/>
       <DevicePreview navigation={navigation}/>
@@ -24,7 +26,6 @@ export default function DevicesList({ navigation }) {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: 'black',
     flex: 1,
   },
 });

@@ -1,10 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useTheme } from '../../../contexts/ThemeProvider';
 
 export default function AddDevice() {
+  const { theme } = useTheme();
+
   return (
-    <View style={styles.mainContainer}>
-      <Text style={styles.text}>Add Device</Text>
+    <View style={[styles.mainContainer, {backgroundColor: theme.background}]}>
+    <Text style={{color: theme.text}}>Add Device</Text>
     </View>
   );
 }
@@ -12,11 +15,7 @@ export default function AddDevice() {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  text: {
-    color: 'white',
   },
 });
