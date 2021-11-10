@@ -1,12 +1,11 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import RootNavigator from './components/RootNavigator';
+import ThemeProvider from './contexts/ThemeProvider';
+import Root from './components/Root';
 
 export default function App() {
   return (
-    <>
-      <StatusBar style="light" />
-      <RootNavigator />
-    </>
+    <ThemeProvider>
+      <Root />
+    </ThemeProvider>
   );
 }
