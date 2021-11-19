@@ -1,6 +1,5 @@
 export const darkTheme = {
-  statusBar: 'light',
-  tabBar: 'dark',
+  id: 'dark',
   background: 'black',
   text: 'white',
   main: '#c930e5',
@@ -8,11 +7,13 @@ export const darkTheme = {
   annex: '#797272',
   dangerMain: '#ff0000',
   dangerSub: '#ea9494',
+  statusBar: 'light',
+  tabBar: 'dark',
+  themeIcon: 'moon',
 };
 
 export const lightTheme = {
-  statusBar: 'dark',
-  tabBar: 'light',
+  id: 'light',
   background: 'white',
   text: 'black',
   main: '#c930e5',
@@ -20,4 +21,7 @@ export const lightTheme = {
   annex: '#cccccc',
   dangerMain: '#ff0000',
   dangerSub: '#ea9494',
+  statusBar: 'dark',
+  tabBar: 'light',
+  themeIcon: 'moon-outline',
 };

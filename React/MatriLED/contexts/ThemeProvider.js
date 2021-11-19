@@ -1,23 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useColorScheme } from 'react-native';
-import * as SecureStore from 'expo-secure-store';
+import { setStorageValue, getStorageValue } from '../helper/storage';
 import { darkTheme, lightTheme } from '../helper/themes';
 
 export const ThemeContext = createContext()
 
-async function save(key, value) {
-  await SecureStore.setItemAsync(key, value);
-}
-
-async function getValueFor(key) {
-  const value = await SecureStore.getItemAsync(key);
-
-  return value;
-}
-
 const ThemeProvider = ({ children }) => {
   const colorScheme = useColorScheme();
-  const [storage, setStorage] = useState("");
   const [theme, setTheme] = useState(darkTheme);
 
   function getSystemTheme() {
@@ -27,12 +16,17 @@ const ThemeProvider = ({ children }) => {
       return darkTheme;
   }
 
-  const getColorTheme = async (colorScheme) => {
-    const result = await getValueFor("didUseSystemTheme");
+  const getColorTheme = async () => {
+    const didUseSystemTheme = await getStorageValue("didUseSystemTheme");
 
-    if (result && result === "false")
-      setTheme(darkTheme);
-    else
+    if (didUseSystemTheme && didUseSystemTheme === "false") {
+      const useTheme = await getStorageValue("usedTheme");
+
+      if (useTheme && useTheme === "light")
+        setTheme(lightTheme);
+      else
+        setTheme(darkTheme);
+    } else
       setTheme(getSystemTheme());
   }
 
@@ -40,9 +34,19 @@ const ThemeProvider = ({ children }) => {
     getColorTheme(colorScheme);
   }, []);
 
+  function ToggleTheme() {
+    if (theme.id === 'dark') {
+      setTheme(lightTheme);
+      setStorageValue("usedTheme", "light");
+    } else {
+      setTheme(darkTheme);
+      setStorageValue("usedTheme", "dark");
+    }
+    setStorageValue("didUseSystemTheme", "false");
+  }
 
   return (
-    <ThemeContext.Provider value={{ theme: theme }}>
+    <ThemeContext.Provider value={{ theme, ToggleTheme }}>
       {children}
     </ThemeContext.Provider>
   )
