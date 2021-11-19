@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTheme } from '../../../contexts/ThemeProvider';
-import HelpButton from '../..//HelpButton';
+import SwapThemeButton from '../../SwapThemeButton';
 import Help from '../help/Help';
 import Settings from './Settings';
 
@@ -17,7 +17,7 @@ export default function SettingsStackNavigator() {
       headerTintColor: theme.text,
       headerStyle: { backgroundColor: theme.background },
       headerRight: () => (
-        <HelpButton navigation={navigation} />
+        <SwapThemeButton />
       ),
     })}
     >
