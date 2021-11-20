@@ -14,7 +14,7 @@ export default function DevicesStackNavigator() {
   return (
     <Stack.Navigator
     initialRouteName="Devices"
-    screenOptions={({ navigation }) => ({
+    screenOptions={() => ({
       headerTintColor: theme.text,
       headerStyle: { backgroundColor: theme.background },
       headerRight: () => (
