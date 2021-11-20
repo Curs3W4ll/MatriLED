@@ -2,7 +2,7 @@ export var darkTheme = {
   id: 'dark',
   statusBar: 'light',
   tabBar: 'dark',
-  themeIcon: 'moon',
+  themeIcon: 'md-sunny',
   background: 'black',
   text: 'white',
   annex: '#797272',
@@ -14,7 +14,7 @@ export var lightTheme = {
   id: 'light',
   statusBar: 'dark',
   tabBar: 'light',
-  themeIcon: 'moon-outline',
+  themeIcon: 'moon',
   background: 'white',
   text: 'black',
   annex: '#cccccc',
@@ -38,6 +38,6 @@ export const redTheme = {
 };
 
 export const blueTheme = {
-  main: '#2f0dea',
+  main: '#664bfa',
   sub: '#241288',
 };
