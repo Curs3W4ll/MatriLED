@@ -18,7 +18,7 @@ export default function SettingsStackNavigator() {
       headerStyle: { backgroundColor: theme.background },
       headerRight: () => (
         <SwapThemeButton />
-      ),
+      )
     })}
     >
       <Stack.Screen name="Help" component={Help} />
