@@ -6,8 +6,8 @@ export default function DeviceDetails() {
   const { theme } = useTheme();
 
   return (
-    <View style={[styles.mainContainer, {backgroundColor: theme.background}]}>
-      <Text style={{color: theme.text}}>Device details</Text>
+    <View style={[styles.mainContainer, { backgroundColor: theme.background }]}>
+      <Text style={{ color: theme.text }}>Device details</Text>
     </View>
   );
 }

@@ -6,8 +6,8 @@ export default function AddDevice() {
   const { theme } = useTheme();
 
   return (
-    <View style={[styles.mainContainer, {backgroundColor: theme.background}]}>
-    <Text style={{color: theme.text}}>Add Device</Text>
+    <View style={[styles.mainContainer, { backgroundColor: theme.background }]}>
+      <Text style={{ color: theme.text }}>Add Device</Text>
     </View>
   );
 }

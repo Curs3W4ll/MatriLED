@@ -13,7 +13,7 @@ export default function AddDeviceStackNavigator() {
   return (
     <Stack.Navigator
     initialRouteName="AddDevice"
-    screenOptions={({navigation}) => ({
+    screenOptions={() => ({
       headerTintColor: theme.text,
       headerStyle: { backgroundColor: theme.background },
       headerRight: () => (

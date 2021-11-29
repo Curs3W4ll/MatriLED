@@ -36,7 +36,7 @@ export default function TabNavigator() {
       tabBarIcon: ({color, size}) => screenOptions(route, color, size),
       tabBarActiveTintColor: theme.main,
       tabBarInactiveTintColor: theme.text,
-      tabBarStyle: [styles.tabBar, {borderTopColor: theme.annex}],
+      tabBarStyle: [styles.tabBar, { borderTopColor: theme.annex }],
       headerShown: false,
     })}
     >
