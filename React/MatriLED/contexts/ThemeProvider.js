@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, useLayoutEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useColorScheme } from 'react-native';
+import * as Updates from 'expo-updates';
 import { setStorageValue, getStorageValue } from '../helper/storage';
 import { darkTheme, lightTheme, purpleTheme, cyanTheme, redTheme, blueTheme } from '../helper/themes';
 
@@ -20,8 +21,7 @@ const ThemeProvider = ({ children }) => {
   const getColorTheme = async () => {
     const didUseSystemTheme = await getStorageValue("didUseSystemTheme");
     const usedBackTheme = await getStorageValue("usedBackTheme");
-    // const usedColorTheme = await getStorageValue("usedColorTheme");
-    const usedColorTheme = "blue";
+    const usedColorTheme = await getStorageValue("usedColorTheme");
     var actualTheme = getSystemTheme();
     var colorTheme = purpleTheme;
 
@@ -43,32 +43,37 @@ const ThemeProvider = ({ children }) => {
     }
     actualTheme["main"] = colorTheme.main;
     actualTheme["sub"] = colorTheme.sub;
+    actualTheme["colorThemeId"] = colorTheme.id;
     setTheme(actualTheme);
     setThemeIsLoaded(true);
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     getColorTheme(colorScheme);
   }, []);
 
-  function ToggleTheme() {
-    var newTheme = theme;
-
-    if (theme.id === 'dark') {
-      newTheme = lightTheme;
-      setStorageValue("usedTheme", "light");
-    } else {
-      newTheme = darkTheme;
-      setStorageValue("usedTheme", "dark");
-    }
-    newTheme["main"] = theme.main;
-    newTheme["sub"] = theme.sub;
-    setTheme(newTheme);
+  function ToggleBackTheme() {
+    if (theme.id === 'dark')
+      setStorageValue("usedBackTheme", "light");
+    else
+      setStorageValue("usedBackTheme", "dark");
     setStorageValue("didUseSystemTheme", "false");
+    getColorTheme();
+  }
+
+  async function ChangeColorTheme(newTheme) {
+    setStorageValue("usedColorTheme", newTheme);
+    if (newTheme !== theme.colorThemeId)
+      Updates.reloadAsync();
+  }
+
+  async function UseSystemTheme() {
+    setStorageValue("didUseSystemTheme", "true");
+    getColorTheme();
   }
 
   return (
-    <ThemeContext.Provider value={{ theme, themeIsLoaded, ToggleTheme }}>
+    <ThemeContext.Provider value={{ theme, themeIsLoaded, ToggleBackTheme, ChangeColorTheme, UseSystemTheme }}>
       {children}
     </ThemeContext.Provider>
   )

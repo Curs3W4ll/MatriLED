@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useTheme } from '../contexts/ThemeProvider';
 import RootNavigator from './RootNavigator';
@@ -17,8 +17,16 @@ export default function Root() {
   } else {
     return (
       <>
-       <ActivityIndicator />
+        <StatusBar style="light" />
+        <ActivityIndicator size="large" style={styles.loadingIndicator} />
       </>
     )
   }
 };
+
+const styles = StyleSheet.create({
+  loadingIndicator: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
+})
