@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ActivityIndicator, View, ScrollView, Text, Switch, StyleSheet, Dimensions, TouchableOpacity, Image } from 'react-native';
+import { View, ScrollView, Text, Switch, StyleSheet, Dimensions, TouchableOpacity, Image } from 'react-native';
+import LoadingIndicator from '../../LoadingIndicator';
 import { useTheme } from '../../../contexts/ThemeProvider';
 import { setStorageValue, getStorageValue } from '../../../helper/storage';
 import { purpleTheme, cyanTheme, redTheme, blueTheme } from '../../../helper/themes';
@@ -95,15 +96,12 @@ export default function Settings() {
     );
   } else {
     return(
-      <ActivityIndicator style={[styles.loadingIndicator, {backgroundColor: theme.background}]} />
+      <LoadingIndicator size="large" />
     );
   }
 }
 
 const styles = StyleSheet.create({
-  loadingIndicator: {
-    flex: 1,
-  },
   mainContainer: {
     flex: 1,
   },
