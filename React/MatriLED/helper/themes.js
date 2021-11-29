@@ -5,7 +5,7 @@ export var darkTheme = {
   themeIcon: 'md-sunny',
   background: 'black',
   text: 'white',
-  annex: '#797272',
+  annex: '#3e3e3e',
   dangerMain: '#ff0000',
   dangerSub: '#ea9494',
 };
@@ -17,7 +17,7 @@ export var lightTheme = {
   themeIcon: 'moon',
   background: 'white',
   text: 'black',
-  annex: '#cccccc',
+  annex: '#797272',
   dangerMain: '#ff0000',
   dangerSub: '#ea9494',
 };
@@ -25,19 +25,23 @@ export var lightTheme = {
 export const purpleTheme = {
   main: '#c930e5',
   sub: '#99839e',
+  id: 'purple',
 };
 
 export const cyanTheme = {
   main: '#08e8be',
   sub: '#07735f',
+  id: 'cya:',
 };
 
 export const redTheme = {
   main: '#da101a',
   sub: '#741b1f',
+  id: 'red',
 };
 
 export const blueTheme = {
   main: '#664bfa',
   sub: '#241288',
+  id: 'blue',
 };

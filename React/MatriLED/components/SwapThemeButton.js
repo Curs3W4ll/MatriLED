@@ -8,10 +8,10 @@ const {height} = Dimensions.get('screen');
 const ICON_HEIGHT = height * 0.03;
 
 export default function SwapThemeButton() {
-  const { theme, ToggleTheme } = useTheme();
+  const { theme, ToggleBackTheme } = useTheme();
 
   return (
-    <TouchableOpacity style={styles.mainContainer} onPress={() => ToggleTheme()}>
+    <TouchableOpacity style={styles.mainContainer} onPress={() => ToggleBackTheme()}>
       <Ionicons name={theme.themeIcon} color={theme.main} size={ICON_HEIGHT}/>
     </TouchableOpacity>
   );
