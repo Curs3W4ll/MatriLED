@@ -6,7 +6,7 @@ export default function LoadingIndicator(props) {
   const { theme } = useTheme();
 
   return (
-    <ActivityIndicator size={props.size ? props.size : "small"} style={[styles.activityIndicator, {backgroundColor: theme.background}]} />
+    <ActivityIndicator size={ props.size ? props.size : "small" } style={[styles.activityIndicator, { backgroundColor: theme.background }]} />
   );
 };
 

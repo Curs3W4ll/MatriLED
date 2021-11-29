@@ -1,31 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import LoadingIndicator from '../../LoadingIndicator';
 import { useTheme } from '../../../contexts/ThemeProvider';
 import DevicePreview from './DevicePreview';
 
 export default function DevicesList({ navigation }) {
-  const { theme } = useTheme();
   const TABBARHEIGHT = useBottomTabBarHeight();
 
-  return(
-    <ScrollView style={[styles.scrollView], { backgroundColor: theme.background }} contentContainerStyle={[{paddingBottom: TABBARHEIGHT}]}>
-      <DevicePreview navigation={navigation}/>
-      <DevicePreview navigation={navigation}/>
-      <DevicePreview navigation={navigation}/>
-      <DevicePreview navigation={navigation}/>
-      <DevicePreview navigation={navigation}/>
-      <DevicePreview navigation={navigation}/>
-      <DevicePreview navigation={navigation}/>
-      <DevicePreview navigation={navigation}/>
-      <DevicePreview navigation={navigation}/>
-      <DevicePreview navigation={navigation}/>
-    </ScrollView>
-  );
+  const { theme } = useTheme();
+  const [ isLoaded, setIsLoaded ] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, [TABBARHEIGHT]);
+
+  if (isLoaded) {
+    return(
+      <ScrollView style={[styles.scrollView], { backgroundColor: theme.background }} contentContainerStyle={[{ paddingBottom: TABBARHEIGHT }]}>
+        <DevicePreview navigation={navigation}/>
+        <DevicePreview navigation={navigation}/>
+        <DevicePreview navigation={navigation}/>
+        <DevicePreview navigation={navigation}/>
+        <DevicePreview navigation={navigation}/>
+        <DevicePreview navigation={navigation}/>
+        <DevicePreview navigation={navigation}/>
+        <DevicePreview navigation={navigation}/>
+        <DevicePreview navigation={navigation}/>
+        <DevicePreview navigation={navigation}/>
+      </ScrollView>
+    );
+  } else {
+    return(
+      <LoadingIndicator size="large" />
+    );
+  }
 }
 
-const styles = StyleSheet.create({
-  scrollView: {
-    flex: 1,
-  },
-});
+  const styles = StyleSheet.create({
+    scrollView: {
+      flex: 1,
+    },
+  });
