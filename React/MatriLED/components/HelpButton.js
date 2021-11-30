@@ -10,6 +10,14 @@ const ICON_HEIGHT = height * 0.03;
 
 export default function HelpButton({ navigation }) {
   const { theme } = useTheme();
+  const styles = StyleSheet.create({
+    mainContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight: ICON_HEIGHT / 2,
+    }
+  });
+
   const [ isLoaded, setIsLoaded ] = useState(false);
 
   useEffect(() => {
@@ -28,11 +36,3 @@ export default function HelpButton({ navigation }) {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  mainContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: ICON_HEIGHT / 2,
-  }
-});

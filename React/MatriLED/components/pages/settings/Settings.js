@@ -13,6 +13,91 @@ const MARGIN = width * 0.07;
 
 export default function Settings() {
   const { theme, UseSystemTheme, ChangeColorTheme } = useTheme();
+  const styles = StyleSheet.create({
+    mainContainer: {
+      flex: 1,
+    },
+    switchLanguageContainer: {
+      height: ITEM_HEIGHT,
+      flexDirection: 'row',
+    },
+    switchLanguageTextContainer: {
+      justifyContent: 'center',
+      alignItems: 'flex-start',
+      flex: 2,
+    },
+    switchLanguageText: {
+      marginLeft: MARGIN,
+      fontSize: 25,
+      color: theme.text,
+    },
+    switchLanguageChoicesContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
+      flexDirection: 'row',
+    },
+    flagImageButton: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
+      flexDirection: 'row',
+      height: SUBITEM_HEIGHT,
+    },
+    flagImage: {
+      resizeMode: 'contain',
+      flex: 0.7,
+    },
+    switchSystemThemeContainer: {
+      height: ITEM_HEIGHT,
+      flexDirection: 'row',
+    },
+    switchSystemThemeTextContainer: {
+      justifyContent: 'center',
+      alignItems: 'flex-start',
+      flex: 2,
+    },
+    switchSystemThemeSwitcherContainer: {
+      justifyContent: 'center',
+      alignItems: 'flex-end',
+      flex: 1,
+    },
+    switchSystemThemeText: {
+      marginLeft: MARGIN,
+      fontSize: 25,
+      color: theme.text,
+    },
+    switchSystemThemeSwitcher: {
+      marginRight: MARGIN,
+    },
+    switchColorThemeContainer: {
+      height: ITEM_HEIGHT,
+      flexDirection: 'row',
+    },
+    switchColorThemeTextContainer: {
+      justifyContent: 'center',
+      alignItems: 'flex-start',
+      flex: 2,
+    },
+    switchColorThemeSwitcherContainer: {
+      flex: 1,
+    },
+    switchColorThemeSwitcherSubContainer: {
+      flex: 1,
+      flexDirection: 'row',
+    },
+    switchColorThemeButton: {
+      flex: 1,
+      margin: '5%',
+      borderColor: theme.text,
+    },
+    switchColorThemeText: {
+      marginLeft: MARGIN,
+      fontSize: 25,
+      color: theme.text,
+    },
+  });
+
   const [ isLoaded, setIsLoaded ] = useState(false);
   const [ switchSystemThemeValue, setSwitchSystemThemeValue ] = useState(true);
   const [ usedLanguage, setUsedLanguage ] = useState("fr");
@@ -56,10 +141,10 @@ export default function Settings() {
 
   if (isLoaded) {
     return(
-      <ScrollView style={[styles.mainContainer, { backgroundColor: theme.background }]}>
+      <ScrollView style={styles.mainContainer}>
         <View style={styles.switchLanguageContainer}>
           <View style={styles.switchLanguageTextContainer}>
-            <Text style={[styles.switchLanguageText, { color: theme.text }]}>Language</Text>
+            <Text style={styles.switchLanguageText}>Language</Text>
           </View>
           <View style={styles.switchLanguageChoicesContainer}>
             <TouchableOpacity style={styles.flagImageButton} onPress={() => UpdateLanguageSwitchValue("fr")}>
@@ -72,7 +157,7 @@ export default function Settings() {
         </View>
         <View style={styles.switchSystemThemeContainer}>
           <View style={styles.switchSystemThemeTextContainer}>
-            <Text style={[styles.switchSystemThemeText, { color: theme.text }]}>Use system theme</Text>
+            <Text style={styles.switchSystemThemeText}>Use system theme</Text>
           </View>
           <View style={styles.switchSystemThemeSwitcherContainer}>
             <Switch value={switchSystemThemeValue} onValueChange={(switchValue) => UpdateSystemThemeSwitchValue(switchValue)} style={styles.switchSystemThemeSwitcher}/>
@@ -80,16 +165,16 @@ export default function Settings() {
         </View>
         <View style={styles.switchColorThemeContainer}>
           <View style={styles.switchColorThemeTextContainer}>
-            <Text style={[styles.switchColorThemeText, { color: theme.text }]}>Color theme</Text>
+            <Text style={styles.switchColorThemeText}>Color theme</Text>
           </View>
           <View style={styles.switchColorThemeSwitcherContainer}>
             <View style={styles.switchColorThemeSwitcherSubContainer}>
-              <TouchableOpacity style={[styles.switchColorThemeButton, { backgroundColor: purpleTheme.main, borderColor: theme.text }, usedColorTheme === "purple" ? { borderWidth: 2 } : {}]} onPress={() => ChangeColorTheme("purple")} />
-              <TouchableOpacity style={[styles.switchColorThemeButton, { backgroundColor: cyanTheme.main, borderColor: theme.text }, usedColorTheme === "cyan" ? { borderWidth: 2 } : {}]} onPress={() => ChangeColorTheme("cyan")} />
+              <TouchableOpacity style={[styles.switchColorThemeButton, { backgroundColor: purpleTheme.main }, usedColorTheme === "purple" ? { borderWidth: 2 } : {}]} onPress={() => ChangeColorTheme("purple")} />
+              <TouchableOpacity style={[styles.switchColorThemeButton, { backgroundColor: cyanTheme.main }, usedColorTheme === "cyan" ? { borderWidth: 2 } : {}]} onPress={() => ChangeColorTheme("cyan")} />
             </View>
             <View style={styles.switchColorThemeSwitcherSubContainer}>
-              <TouchableOpacity style={[styles.switchColorThemeButton, { backgroundColor: redTheme.main, borderColor: theme.text }, usedColorTheme === "red" ? { borderWidth: 2 } : {}]} onPress={() => ChangeColorTheme("red")} />
-              <TouchableOpacity style={[styles.switchColorThemeButton, { backgroundColor: blueTheme.main, borderColor: theme.text }, usedColorTheme === "blue" ? { borderWidth: 2 } : {}]} onPress={() => ChangeColorTheme("blue")} />
+              <TouchableOpacity style={[styles.switchColorThemeButton, { backgroundColor: redTheme.main }, usedColorTheme === "red" ? { borderWidth: 2 } : {}]} onPress={() => ChangeColorTheme("red")} />
+              <TouchableOpacity style={[styles.switchColorThemeButton, { backgroundColor: blueTheme.main }, usedColorTheme === "blue" ? { borderWidth: 2 } : {}]} onPress={() => ChangeColorTheme("blue")} />
             </View>
           </View>
         </View>
@@ -101,84 +186,3 @@ export default function Settings() {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-  },
-  switchLanguageContainer: {
-    height: ITEM_HEIGHT,
-    flexDirection: 'row',
-  },
-  switchLanguageTextContainer: {
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    flex: 2,
-  },
-  switchLanguageText: {
-    marginLeft: MARGIN,
-    fontSize: 25,
-  },
-  switchLanguageChoicesContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-    flexDirection: 'row',
-  },
-  flagImageButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-    flexDirection: 'row',
-    height: SUBITEM_HEIGHT,
-  },
-  flagImage: {
-    resizeMode: 'contain',
-    flex: 0.7,
-  },
-  switchSystemThemeContainer: {
-    height: ITEM_HEIGHT,
-    flexDirection: 'row',
-  },
-  switchSystemThemeTextContainer: {
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    flex: 2,
-  },
-  switchSystemThemeSwitcherContainer: {
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    flex: 1,
-  },
-  switchSystemThemeText: {
-    marginLeft: MARGIN,
-    fontSize: 25,
-  },
-  switchSystemThemeSwitcher: {
-    marginRight: MARGIN,
-  },
-  switchColorThemeContainer: {
-    height: ITEM_HEIGHT,
-    flexDirection: 'row',
-  },
-  switchColorThemeTextContainer: {
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    flex: 2,
-  },
-  switchColorThemeSwitcherContainer: {
-    flex: 1,
-  },
-  switchColorThemeSwitcherSubContainer: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  switchColorThemeButton: {
-    flex: 1,
-    margin: '5%',
-  },
-  switchColorThemeText: {
-    marginLeft: MARGIN,
-    fontSize: 25,
-  },
-});

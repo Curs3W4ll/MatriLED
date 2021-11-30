@@ -13,6 +13,78 @@ const ITEM_HEIGHT = height * 0.15;
 
 export default function DevicePreview({ navigation }) {
   const { theme } = useTheme();
+  const styles = StyleSheet.create({
+    mainContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      height: ITEM_HEIGHT,
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
+      borderColor: theme.annex,
+    },
+    statusContainer: {
+      flex: 2,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    statusBox: {
+      flexWrap: 'nowrap',
+      flex: 0.65,
+    },
+    infoContainer: {
+      flex: 8,
+    },
+    nameContainer: {
+      justifyContent: 'center',
+      flex: 2,
+    },
+    nameBox: {
+      flex: 0.7,
+      marginLeft: '5%',
+      marginRight: '10%',
+    },
+    nameText: {
+      color: theme.text,
+    },
+    luminosityContainer: {
+      flex: 3,
+      flexDirection: 'row',
+    },
+    luminosityNumberContainer: {
+      flex: 3,
+      justifyContent: 'center',
+    },
+    luminosityNumberBox: {
+      flex: 0.3,
+      alignItems: 'flex-end',
+      marginRight: '10%',
+    },
+    luminosityBarContainer: {
+      flex: 8,
+    },
+    slider: {
+      flex: 1,
+    },
+    luminosityIconContainer: {
+      flex: 2,
+      flexDirection: 'row',
+      justifyContent: 'center',
+    },
+    luminosityIconBox: {
+      justifyContent: 'center',
+      flex: 0.8,
+    },
+    arrowContainer: {
+      flex: 1,
+      justifyContent: 'flex-end',
+    },
+    arrowBox: {
+      flex: 0.4,
+      marginBottom: '30%',
+    },
+  });
+
   const [ isLoaded, setIsLoaded ] = useState(false);
   const [ luminosity, setLuminosity ] = useState(0);
   const [ powerColor, setPowerColor ] = useState(theme.main);
@@ -35,7 +107,7 @@ export default function DevicePreview({ navigation }) {
 
   if (isLoaded) {
     return(
-      <TouchableOpacity style={[styles.mainContainer, { borderColor: theme.annex }]} onPress={() => navigation.navigate("Device")}>
+      <TouchableOpacity style={styles.mainContainer} onPress={() => navigation.navigate("Device")}>
         <View style={styles.statusContainer}>
           <TouchableOpacity style={styles.statusBox} onPress={() => swapPowerColor()} onLayout={({ nativeEvent }) => { setStateBoxLayout(nativeEvent.layout) }}>
             <FontAwesome5Icon name='power-off' color={powerColor} size={stateBoxLayout.width} />
@@ -44,13 +116,13 @@ export default function DevicePreview({ navigation }) {
         <View style={styles.infoContainer}>
           <View style={styles.nameContainer}>
             <View style={styles.nameBox} onLayout={({ nativeEvent }) => { setNameBoxLayout(nativeEvent.layout) }}>
-              <Text style={{ fontSize: nameBoxLayout.height, color: theme.text }} numberOfLines={1}>Device name too long</Text>
+              <Text style={[styles.nameText, { fontSize: nameBoxLayout.height }]} numberOfLines={1}>Device name too long</Text>
             </View>
           </View>
           <View style={styles.luminosityContainer}>
             <View style={styles.luminosityNumberContainer}>
               <View style={styles.luminosityNumberBox} onLayout={({ nativeEvent }) => { setLuminosityNumberBoxLayout(nativeEvent.layout) }}>
-                <Text style={{ fontSize: luminosityNumberBoxLayout.height, color: theme.text }}>{ luminosity }</Text>
+                <Text style={[styles.nameText, { fontSize: luminosityNumberBoxLayout.height }]}>{ luminosity }</Text>
               </View>
             </View>
             <View style={styles.luminosityBarContainer}>
@@ -76,71 +148,3 @@ export default function DevicePreview({ navigation }) {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    height: ITEM_HEIGHT,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-  },
-  statusContainer: {
-    flex: 2,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  statusBox: {
-    flexWrap: 'nowrap',
-    flex: 0.65,
-  },
-  infoContainer: {
-    flex: 8,
-  },
-  nameContainer: {
-    justifyContent: 'center',
-    flex: 2,
-  },
-  nameBox: {
-    flex: 0.7,
-    marginLeft: '5%',
-    marginRight: '10%',
-  },
-  luminosityContainer: {
-    flex: 3,
-    flexDirection: 'row',
-  },
-  luminosityNumberContainer: {
-    flex: 3,
-    justifyContent: 'center',
-  },
-  luminosityNumberBox: {
-    flex: 0.3,
-    alignItems: 'flex-end',
-    marginRight: '10%',
-  },
-  luminosityBarContainer: {
-    flex: 8,
-  },
-  slider: {
-    flex: 1,
-  },
-  luminosityIconContainer: {
-    flex: 2,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  luminosityIconBox: {
-    justifyContent: 'center',
-    flex: 0.8,
-  },
-  arrowContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  arrowBox: {
-    flex: 0.4,
-    marginBottom: '30%',
-  },
-});

@@ -26,6 +26,12 @@ const screenOptions = (route, color, size) => {
 
 export default function TabNavigator() {
   const { theme } = useTheme();
+  const styles = StyleSheet.create({
+    tabBar: {
+      backgroundColor: 'transparent',
+      borderTopColor: theme.annex,
+    },
+  });
 
   return (
     <Tab.Navigator
@@ -36,7 +42,7 @@ export default function TabNavigator() {
       tabBarIcon: ({color, size}) => screenOptions(route, color, size),
       tabBarActiveTintColor: theme.main,
       tabBarInactiveTintColor: theme.text,
-      tabBarStyle: [styles.tabBar, { borderTopColor: theme.annex }],
+      tabBarStyle: styles.tabBar,
       headerShown: false,
     })}
     >
@@ -46,9 +52,3 @@ export default function TabNavigator() {
     </Tab.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  tabBar: {
-    backgroundColor: 'transparent',
-  },
-});
