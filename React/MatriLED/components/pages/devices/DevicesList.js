@@ -6,9 +6,15 @@ import { useTheme } from '../../../contexts/ThemeProvider';
 import DevicePreview from './DevicePreview';
 
 export default function DevicesList({ navigation }) {
-  const TABBARHEIGHT = useBottomTabBarHeight();
-
   const { theme } = useTheme();
+  const styles = StyleSheet.create({
+    scrollView: {
+      flex: 1,
+      backgroundColor: theme.background,
+    },
+  });
+
+  const TABBARHEIGHT = useBottomTabBarHeight();
   const [ isLoaded, setIsLoaded ] = useState(false);
 
   useEffect(() => {
@@ -17,7 +23,7 @@ export default function DevicesList({ navigation }) {
 
   if (isLoaded) {
     return(
-      <ScrollView style={[styles.scrollView], { backgroundColor: theme.background }} contentContainerStyle={[{ paddingBottom: TABBARHEIGHT }]}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={[{ paddingBottom: TABBARHEIGHT }]}>
         <DevicePreview navigation={navigation}/>
         <DevicePreview navigation={navigation}/>
         <DevicePreview navigation={navigation}/>
@@ -36,9 +42,3 @@ export default function DevicesList({ navigation }) {
     );
   }
 }
-
-  const styles = StyleSheet.create({
-    scrollView: {
-      flex: 1,
-    },
-  });

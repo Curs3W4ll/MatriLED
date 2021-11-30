@@ -6,6 +6,12 @@ import RootNavigator from './RootNavigator';
 
 export default function Root() {
   const { theme, themeIsLoaded } = useTheme();
+  const styles = StyleSheet.create({
+    loadingIndicator: {
+      flex: 1,
+      backgroundColor: 'black',
+    },
+  })
 
   if (themeIsLoaded) {
     return (
@@ -23,10 +29,3 @@ export default function Root() {
     )
   }
 };
-
-const styles = StyleSheet.create({
-  loadingIndicator: {
-    flex: 1,
-    backgroundColor: 'black',
-  },
-})
