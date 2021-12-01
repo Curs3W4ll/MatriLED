@@ -9,13 +9,17 @@ export default function AddDevice() {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: theme.background,
+      backgroundColor: theme.colors.background,
     },
+    text: {
+      fontSize: theme.sizes.text,
+      color: theme.colors.text,
+    }
   });
 
   return (
     <View style={styles.mainContainer}>
-      <Text style={{ color: theme.text }}>Add Device</Text>
+      <Text style={styles.text}>Add Device</Text>
     </View>
   );
 }

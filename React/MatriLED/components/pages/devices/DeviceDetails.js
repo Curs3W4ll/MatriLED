@@ -9,10 +9,11 @@ export default function DeviceDetails() {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: theme.background,
+      backgroundColor: theme.colors.background,
     },
     text: {
-      color: theme.text,
+      fontSize: theme.sizes.text,
+      color: theme.colors.text,
     },
   });
 

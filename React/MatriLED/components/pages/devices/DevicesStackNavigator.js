@@ -13,7 +13,11 @@ export default function DevicesStackNavigator() {
   const { theme } = useTheme();
   const styles = StyleSheet.create({
     headerStyle: {
-      backgroundColor: theme.background,
+      backgroundColor: theme.colors.background,
+    },
+    headerTitleStyle: {
+      fontSize: theme.sizes.label,
+      fontWeight: "bold",
     },
   });
 
@@ -21,8 +25,9 @@ export default function DevicesStackNavigator() {
     <Stack.Navigator
     initialRouteName="Devices"
     screenOptions={() => ({
-      headerTintColor: theme.text,
+      headerTintColor: theme.colors.text,
       headerStyle: styles.headerStyle,
+      headerTitleStyle: styles.headerTitleStyle,
       headerRight: () => (
         <SwapThemeButton />
       ),

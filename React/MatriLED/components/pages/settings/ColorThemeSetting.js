@@ -1,21 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import LoadingIndicator from '../../LoadingIndicator';
 import { useTheme } from '../../../contexts/ThemeProvider';
 import { getStorageValue } from '../../../helper/storage';
-import { purpleTheme, cyanTheme, redTheme, blueTheme } from '../../../helper/themes';
-
-const {height, width} = Dimensions.get('screen');
-
-const ITEM_HEIGHT = height * 0.1;
-const SUBITEM_HEIGHT = ITEM_HEIGHT * 0.4;
-const MARGIN = width * 0.07;
+import { purpleTheme, cyanTheme, redTheme, blueTheme } from '../../../helper/colorThemes';
 
 export default function ColorThemeSetting() {
   const { theme, ChangeColorTheme } = useTheme();
   const styles = StyleSheet.create({
     mainContainer: {
-      height: ITEM_HEIGHT,
+      height: theme.sizes.section,
       flexDirection: 'row',
     },
     textContainer: {
@@ -32,13 +26,13 @@ export default function ColorThemeSetting() {
     },
     button: {
       flex: 1,
-      margin: '5%',
-      borderColor: theme.text,
+      margin: theme.sizes.smallMargin,
+      borderColor: theme.colors.text,
     },
     text: {
-      marginLeft: MARGIN,
-      fontSize: 25,
-      color: theme.text,
+      marginLeft: theme.sizes.mediumMargin,
+      fontSize: theme.sizes.title,
+      color: theme.colors.text,
     },
   });
 
@@ -56,7 +50,7 @@ export default function ColorThemeSetting() {
 
   useEffect(() => {
     GetStoredValue();
-  }, [ITEM_HEIGHT, SUBITEM_HEIGHT, MARGIN]);
+  }, []);
 
   if (isLoaded) {
     return(

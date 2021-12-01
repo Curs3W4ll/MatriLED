@@ -29,7 +29,7 @@ export default function TabNavigator() {
   const styles = StyleSheet.create({
     tabBar: {
       backgroundColor: 'transparent',
-      borderTopColor: theme.annex,
+      borderTopColor: theme.colors.annex,
     },
   });
 
@@ -40,8 +40,8 @@ export default function TabNavigator() {
     screenOptions={({route}) => ({
       tabBarShowLabel: false,
       tabBarIcon: ({color, size}) => screenOptions(route, color, size),
-      tabBarActiveTintColor: theme.main,
-      tabBarInactiveTintColor: theme.text,
+      tabBarActiveTintColor: theme.colors.main,
+      tabBarInactiveTintColor: theme.colors.text,
       tabBarStyle: styles.tabBar,
       headerShown: false,
     })}

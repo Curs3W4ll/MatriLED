@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Slider from '@react-native-community/slider';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons';
-import LoadingIndicator from '../../LoadingIndicator';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { useTheme } from '../../../contexts/ThemeProvider';
-
-const { height } = Dimensions.get('screen');
-
-const ITEM_HEIGHT = height * 0.15;
 
 export default function DevicePreview({ navigation }) {
   const { theme } = useTheme();
@@ -17,10 +12,10 @@ export default function DevicePreview({ navigation }) {
     mainContainer: {
       flex: 1,
       flexDirection: 'row',
-      height: ITEM_HEIGHT,
+      height: theme.sizes.section,
       borderTopWidth: 1,
       borderBottomWidth: 1,
-      borderColor: theme.annex,
+      borderColor: theme.colors.annex,
     },
     statusContainer: {
       flex: 2,
@@ -41,11 +36,12 @@ export default function DevicePreview({ navigation }) {
     },
     nameBox: {
       flex: 0.7,
-      marginLeft: '5%',
-      marginRight: '10%',
+      marginLeft: theme.sizes.mediumMargin,
+      marginRight: theme.sizes.bigMargin,
     },
-    nameText: {
-      color: theme.text,
+    deviceNameText: {
+      fontSize: theme.sizes.title,
+      color: theme.colors.text,
     },
     luminosityContainer: {
       flex: 3,
@@ -58,7 +54,11 @@ export default function DevicePreview({ navigation }) {
     luminosityNumberBox: {
       flex: 0.3,
       alignItems: 'flex-end',
-      marginRight: '10%',
+      marginRight: theme.sizes.smallMargin,
+    },
+    luminosityNumberText: {
+      fontSize: theme.sizes.text,
+      color: theme.colors.text,
     },
     luminosityBarContainer: {
       flex: 8,
@@ -81,70 +81,54 @@ export default function DevicePreview({ navigation }) {
     },
     arrowBox: {
       flex: 0.4,
-      marginBottom: '30%',
+      marginBottom: theme.sizes.mediumMargin,
     },
   });
 
-  const [ isLoaded, setIsLoaded ] = useState(false);
   const [ luminosity, setLuminosity ] = useState(0);
-  const [ powerColor, setPowerColor ] = useState(theme.main);
-  const [ stateBoxLayout, setStateBoxLayout ] = useState({});
-  const [ nameBoxLayout, setNameBoxLayout ] = useState({});
-  const [ luminosityNumberBoxLayout, setLuminosityNumberBoxLayout ] = useState({});
-  const [ luminosityIconBoxLayout, setLuminosityIconBoxLayout ] = useState({});
-  const [ arrowBoxLayout, setArrowBoxLayout ] = useState({});
+  const [ powerColor, setPowerColor ] = useState(theme.colors.main);
 
   function swapPowerColor() {
-    if (powerColor === theme.main)
-      setPowerColor(theme.sub);
+    if (powerColor === theme.colors.main)
+      setPowerColor(theme.colors.sub);
     else
-      setPowerColor(theme.main);
+      setPowerColor(theme.colors.main);
   }
 
-  useEffect(() => {
-    setIsLoaded(true);
-  }, [ ITEM_HEIGHT]);
-
-  if (isLoaded) {
-    return(
-      <TouchableOpacity style={styles.mainContainer} onPress={() => navigation.navigate("Device")}>
-        <View style={styles.statusContainer}>
-          <TouchableOpacity style={styles.statusBox} onPress={() => swapPowerColor()} onLayout={({ nativeEvent }) => { setStateBoxLayout(nativeEvent.layout) }}>
-            <FontAwesome5Icon name='power-off' color={powerColor} size={stateBoxLayout.width} />
-          </TouchableOpacity>
+  return(
+    <TouchableOpacity style={styles.mainContainer} onPress={() => navigation.navigate("Device")}>
+      <View style={styles.statusContainer}>
+        <TouchableOpacity style={styles.statusBox} onPress={() => swapPowerColor()}>
+          <FontAwesome5Icon name='power-off' color={powerColor} size={theme.sizes.bigIcon} />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.infoContainer}>
+        <View style={styles.nameContainer}>
+          <View style={styles.nameBox}>
+            <Text style={styles.deviceNameText} numberOfLines={1}>Device name waaaaaaay too long</Text>
+          </View>
         </View>
-        <View style={styles.infoContainer}>
-          <View style={styles.nameContainer}>
-            <View style={styles.nameBox} onLayout={({ nativeEvent }) => { setNameBoxLayout(nativeEvent.layout) }}>
-              <Text style={[styles.nameText, { fontSize: nameBoxLayout.height }]} numberOfLines={1}>Device name too long</Text>
+        <View style={styles.luminosityContainer}>
+          <View style={styles.luminosityNumberContainer}>
+            <View style={styles.luminosityNumberBox}>
+              <Text style={styles.luminosityNumberText}>{luminosity}</Text>
             </View>
           </View>
-          <View style={styles.luminosityContainer}>
-            <View style={styles.luminosityNumberContainer}>
-              <View style={styles.luminosityNumberBox} onLayout={({ nativeEvent }) => { setLuminosityNumberBoxLayout(nativeEvent.layout) }}>
-                <Text style={[styles.nameText, { fontSize: luminosityNumberBoxLayout.height }]}>{ luminosity }</Text>
-              </View>
+          <View style={styles.luminosityBarContainer}>
+            <Slider style={styles.slider} minimumValue={0} maximumValue={100} value={luminosity} onValueChange={value => setLuminosity(value)} step={10} minimumTrackTintColor={theme.colors.main} maximumTrackTintColor={theme.colors.sub} thumbTintColor={theme.colors.annex} tapToSeek='true'/>
+          </View>
+          <View style={styles.luminosityIconContainer}>
+            <View style={styles.luminosityIconBox}>
+              <FeatherIcon name='sun' color={theme.colors.main} size={theme.sizes.mediumIcon} />
             </View>
-            <View style={styles.luminosityBarContainer}>
-              <Slider style={styles.slider} minimumValue={0} maximumValue={100} value={luminosity} onValueChange={value => setLuminosity(value)} step={10} minimumTrackTintColor={theme.main} maximumTrackTintColor={theme.sub} thumbTintColor={theme.annex} tapToSeek='true'/>
-            </View>
-            <View style={styles.luminosityIconContainer}>
-              <View style={styles.luminosityIconBox} onLayout={({ nativeEvent }) => { setLuminosityIconBoxLayout(nativeEvent.layout) }}>
-                <FeatherIcon name='sun' color={theme.main} size={luminosityIconBoxLayout.width} />
-              </View>
-            </View>
-            <View style={styles.arrowContainer}>
-              <View style={styles.arrowBox} onLayout={({ nativeEvent }) => { setArrowBoxLayout(nativeEvent.layout) }}>
-                <SimpleLineIcon name='arrow-right' color={theme.annex} size={arrowBoxLayout.width} />
-              </View>
+          </View>
+          <View style={styles.arrowContainer}>
+            <View style={styles.arrowBox}>
+              <MaterialIcon name='arrow-forward-ios' color={theme.colors.text} size={theme.sizes.smallIcon} />
             </View>
           </View>
         </View>
-      </TouchableOpacity>
-    );
-  } else {
-    return(
-      <LoadingIndicator />
-    );
-  }
+      </View>
+    </TouchableOpacity>
+  );
 }

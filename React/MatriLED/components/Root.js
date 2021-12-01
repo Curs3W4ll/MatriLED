@@ -16,7 +16,7 @@ export default function Root() {
   if (themeIsLoaded) {
     return (
       <>
-        <StatusBar style={theme.statusBar} />
+        <StatusBar style={theme.colors.statusBar} />
         <RootNavigator />
       </>
     );

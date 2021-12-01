@@ -7,7 +7,7 @@ export default function LoadingIndicator(props) {
   const styles = StyleSheet.create({
     activityIndicator: {
       flex: 1,
-      backgroundColor: theme.background,
+      backgroundColor: theme.colors.background,
     },
   });
 

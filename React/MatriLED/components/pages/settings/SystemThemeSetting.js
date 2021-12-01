@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Switch, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, Switch, StyleSheet } from 'react-native';
 import LoadingIndicator from '../../LoadingIndicator';
 import { useTheme } from '../../../contexts/ThemeProvider';
 import { setStorageValue, getStorageValue } from '../../../helper/storage';
-
-const {height, width} = Dimensions.get('screen');
-
-const ITEM_HEIGHT = height * 0.1;
-const SUBITEM_HEIGHT = ITEM_HEIGHT * 0.4;
-const MARGIN = width * 0.07;
 
 export default function SystemThemeSetting() {
   const { theme, UseSystemTheme } = useTheme();
   const styles = StyleSheet.create({
     mainContainer: {
-      height: ITEM_HEIGHT,
+      height: theme.sizes.section,
       flexDirection: 'row',
     },
     textContainer: {
@@ -28,12 +22,12 @@ export default function SystemThemeSetting() {
       flex: 1,
     },
     text: {
-      marginLeft: MARGIN,
-      fontSize: 25,
-      color: theme.text,
+      marginLeft: theme.sizes.mediumMargin,
+      fontSize: theme.sizes.title,
+      color: theme.colors.text,
     },
     switcher: {
-      marginRight: MARGIN,
+      marginRight: theme.sizes.mediumMargin,
     },
   });
 
@@ -62,7 +56,7 @@ export default function SystemThemeSetting() {
 
   useEffect(() => {
     GetStoredValue();
-  }, [ITEM_HEIGHT, SUBITEM_HEIGHT, MARGIN]);
+  }, []);
 
   if (isLoaded) {
     return(

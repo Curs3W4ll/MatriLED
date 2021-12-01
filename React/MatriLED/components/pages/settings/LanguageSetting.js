@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import LoadingIndicator from '../../LoadingIndicator';
 import { useTheme } from '../../../contexts/ThemeProvider';
 import { setStorageValue, getStorageValue } from '../../../helper/storage';
-
-const {height, width} = Dimensions.get('screen');
-
-const ITEM_HEIGHT = height * 0.1;
-const SUBITEM_HEIGHT = ITEM_HEIGHT * 0.4;
-const MARGIN = width * 0.07;
 
 export default function LanguageSetting() {
   const { theme } = useTheme();
   const styles = StyleSheet.create({
     mainContainer: {
-      height: ITEM_HEIGHT,
+      height: theme.sizes.section,
       flexDirection: 'row',
     },
     textContainer: {
@@ -23,9 +17,9 @@ export default function LanguageSetting() {
       flex: 2,
     },
     text: {
-      marginLeft: MARGIN,
-      fontSize: 25,
-      color: theme.text,
+      marginLeft: theme.sizes.mediumMargin,
+      fontSize: theme.sizes.title,
+      color: theme.colors.text,
     },
     switchContainer: {
       justifyContent: 'center',
@@ -38,7 +32,6 @@ export default function LanguageSetting() {
       alignItems: 'center',
       flex: 1,
       flexDirection: 'row',
-      height: SUBITEM_HEIGHT,
     },
     flagImage: {
       resizeMode: 'contain',
@@ -65,7 +58,7 @@ export default function LanguageSetting() {
 
   useEffect(() => {
     GetStoredValue();
-  }, [ITEM_HEIGHT, SUBITEM_HEIGHT, MARGIN]);
+  }, []);
 
   if (isLoaded) {
     return(
