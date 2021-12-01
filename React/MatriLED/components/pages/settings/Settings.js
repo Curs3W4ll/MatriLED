@@ -10,7 +10,7 @@ export default function Settings() {
   const styles = StyleSheet.create({
     mainContainer: {
       flex: 1,
-      backgroundColor: theme.background,
+      backgroundColor: theme.colors.background,
     },
   });
 

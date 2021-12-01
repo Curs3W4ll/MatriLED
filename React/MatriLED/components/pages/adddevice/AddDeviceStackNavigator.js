@@ -12,23 +12,28 @@ export default function AddDeviceStackNavigator() {
   const { theme } = useTheme();
   const styles = StyleSheet.create({
     headerStyle: {
-      backgroundColor: theme.background,
+      backgroundColor: theme.colors.background,
+    },
+    headerTitleStyle: {
+      fontSize: theme.sizes.label,
+      fontWeight: "bold",
     },
   });
 
   return (
     <Stack.Navigator
-    initialRouteName="AddDevice"
+    initialRouteName="Add device"
     screenOptions={() => ({
-      headerTintColor: theme.text,
+      headerTintColor: theme.colors.text,
       headerStyle: styles.headerStyle,
+      headerTitleStyle: styles.headerTitleStyle,
       headerRight: () => (
         <SwapThemeButton />
       ),
     })}
     >
       <Stack.Screen name="Help" component={Help} />
-      <Stack.Screen name="AddDevice" component={AddDevice} />
+      <Stack.Screen name="Add device" component={AddDevice} />
     </Stack.Navigator>
   );
 }

@@ -9,10 +9,11 @@ export default function Helpa() {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: theme.background,
+      backgroundColor: theme.colors.background,
     },
     text: {
-      color: theme.text,
+      fontSize: theme.sizes.text,
+      color: theme.colors.text,
     },
   });
 

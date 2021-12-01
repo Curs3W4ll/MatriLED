@@ -18,7 +18,7 @@ export default function CustomTabBar(props) {
   return (
     <BlurView
     style={styles.blurView}
-    tint={theme.tabBar}
+    tint={theme.colors.tabBar}
     intensity={80}>
       <BottomTabBar {...props} />
     </BlurView>

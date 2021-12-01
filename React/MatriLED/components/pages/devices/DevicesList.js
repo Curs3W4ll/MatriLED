@@ -10,7 +10,7 @@ export default function DevicesList({ navigation }) {
   const styles = StyleSheet.create({
     scrollView: {
       flex: 1,
-      backgroundColor: theme.background,
+      backgroundColor: theme.colors.background,
     },
   });
 
