@@ -31,7 +31,7 @@ export const purpleTheme = {
 export const cyanTheme = {
   main: '#08e8be',
   sub: '#07735f',
-  id: 'cya:',
+  id: 'cyan',
 };
 
 export const redTheme = {
