@@ -1,4 +1,4 @@
-export var darkTheme = {
+export const darkTheme = {
   id: 'dark',
   statusBar: 'light',
   tabBar: 'dark',
@@ -10,7 +10,7 @@ export var darkTheme = {
   dangerSub: '#ea9494',
 };
 
-export var lightTheme = {
+export const lightTheme = {
   id: 'light',
   statusBar: 'dark',
   tabBar: 'light',

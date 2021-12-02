@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTheme } from '../../../contexts/ThemeProvider';
+import { useLanguage } from '../../../contexts/LanguageProvider';
 
 export default function AddDevice() {
   const { theme } = useTheme();
@@ -17,9 +18,11 @@ export default function AddDevice() {
     }
   });
 
+  const { language } = useLanguage();
+
   return (
     <View style={styles.mainContainer}>
-      <Text style={styles.text}>Add Device</Text>
+      <Text style={styles.text}>{ language.addDeviceLabel }</Text>
     </View>
   );
 }

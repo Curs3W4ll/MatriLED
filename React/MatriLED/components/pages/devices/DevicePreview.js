@@ -111,7 +111,7 @@ export default function DevicePreview({ navigation }) {
         <View style={styles.luminosityContainer}>
           <View style={styles.luminosityNumberContainer}>
             <View style={styles.luminosityNumberBox}>
-              <Text style={styles.luminosityNumberText}>{luminosity}</Text>
+              <Text style={styles.luminosityNumberText}>{ luminosity }</Text>
             </View>
           </View>
           <View style={styles.luminosityBarContainer}>

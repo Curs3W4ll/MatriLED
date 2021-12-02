@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTheme } from '../../../contexts/ThemeProvider';
+import { useLanguage } from '../../../contexts/LanguageProvider';
 import SwapThemeButton from '../../SwapThemeButton';
 import Help from '../help/Help';
 import AddDevice from './AddDevice';
@@ -20,6 +21,8 @@ export default function AddDeviceStackNavigator() {
     },
   });
 
+  const { language } = useLanguage();
+
   return (
     <Stack.Navigator
     initialRouteName="Add device"
@@ -32,8 +35,20 @@ export default function AddDeviceStackNavigator() {
       ),
     })}
     >
-      <Stack.Screen name="Help" component={Help} />
-      <Stack.Screen name="Add device" component={AddDevice} />
+      <Stack.Screen
+      name="Help"
+      component={Help}
+      options={{
+        title: language.helpLabel,
+      }}
+      />
+      <Stack.Screen
+      name="Add device"
+      component={AddDevice}
+      options={{
+        title: language.addDeviceLabel,
+      }}
+    />
     </Stack.Navigator>
   );
 }

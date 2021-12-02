@@ -2,6 +2,7 @@ import React from 'react';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useTheme } from '../contexts/ThemeProvider';
+import { useLanguage } from '../contexts/LanguageProvider';
 import RootNavigator from './RootNavigator';
 
 export default function Root() {
@@ -13,7 +14,9 @@ export default function Root() {
     },
   })
 
-  if (themeIsLoaded) {
+  const { languageIsLoaded } = useLanguage();
+
+  if (themeIsLoaded && languageIsLoaded) {
     return (
       <>
         <StatusBar style={theme.colors.statusBar} />
