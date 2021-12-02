@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTheme } from '../../../contexts/ThemeProvider';
+import { useLanguage } from '../../../contexts/LanguageProvider';
 import SwapThemeButton from '../../SwapThemeButton';
 import Help from '../help/Help';
 import Settings from './Settings';
@@ -20,6 +21,8 @@ export default function SettingsStackNavigator() {
     },
   });
 
+  const { language } = useLanguage();
+
   return (
     <Stack.Navigator
     initialRouteName="Settings"
@@ -32,8 +35,20 @@ export default function SettingsStackNavigator() {
       )
     })}
     >
-      <Stack.Screen name="Help" component={Help} />
-      <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen
+      name="Help"
+      component={Help}
+      options={{
+        title: language.helpLabel,
+      }}
+      />
+      <Stack.Screen
+      name="Settings"
+      component={Settings}
+      options={{
+        title: language.settingsLabel,
+      }}
+      />
     </Stack.Navigator>
   );
 }

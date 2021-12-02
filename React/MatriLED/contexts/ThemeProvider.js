@@ -58,6 +58,7 @@ const ThemeProvider = ({ children }) => {
     sizeTheme.note = height * 0.012;
 
     sizeTheme.section = height * 0.15;
+    sizeTheme.smallSection = height * 0.1;
     sizeTheme.item = height * 0.15;
 
     sizeTheme.smallMargin = width * 0.02;

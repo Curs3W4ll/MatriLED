@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Switch, StyleSheet } from 'react-native';
 import LoadingIndicator from '../../LoadingIndicator';
 import { useTheme } from '../../../contexts/ThemeProvider';
+import { useLanguage } from '../../../contexts/LanguageProvider';
 import { setStorageValue, getStorageValue } from '../../../helper/storage';
 
 export default function SystemThemeSetting() {
   const { theme, UseSystemTheme } = useTheme();
   const styles = StyleSheet.create({
     mainContainer: {
-      height: theme.sizes.section,
+      height: theme.sizes.smallSection,
       flexDirection: 'row',
     },
     textContainer: {
@@ -30,6 +31,8 @@ export default function SystemThemeSetting() {
       marginRight: theme.sizes.mediumMargin,
     },
   });
+
+  const { language } = useLanguage();
 
   const [ isLoaded, setIsLoaded ] = useState(false);
   const [ switchValue, setSwitchSystemThemeValue ] = useState(true);
@@ -62,7 +65,7 @@ export default function SystemThemeSetting() {
     return(
       <View style={styles.mainContainer}>
         <View style={styles.textContainer}>
-          <Text style={styles.text}>Use system theme</Text>
+          <Text style={styles.text}>{ language.systemThemeTitle }</Text>
         </View>
         <View style={styles.switchContainer}>
           <Switch value={switchValue} onValueChange={(switchValue) => UpdateSwitchValue(switchValue)} style={styles.switcher}/>

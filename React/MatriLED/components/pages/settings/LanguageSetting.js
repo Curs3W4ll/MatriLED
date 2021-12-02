@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import LoadingIndicator from '../../LoadingIndicator';
 import { useTheme } from '../../../contexts/ThemeProvider';
-import { setStorageValue, getStorageValue } from '../../../helper/storage';
+import { useLanguage } from '../../../contexts/LanguageProvider';
 
 export default function LanguageSetting() {
   const { theme } = useTheme();
   const styles = StyleSheet.create({
     mainContainer: {
-      height: theme.sizes.section,
+      height: theme.sizes.smallSection,
       flexDirection: 'row',
     },
     textContainer: {
@@ -39,46 +38,21 @@ export default function LanguageSetting() {
     },
   });
 
-  const [ isLoaded, setIsLoaded ] = useState(false);
-  const [ usedLanguage, setUsedLanguage ] = useState("fr");
+  const { language, ChangeLanguage } = useLanguage();
 
-  async function GetStoredValue() {
-    const storedUsedLanguage = await getStorageValue("usedLanguage");
-
-    if (storedUsedLanguage)
-      setUsedLanguage(storedUsedLanguage);
-
-    setIsLoaded(true);
-  }
-
-  function UpdateSwitchValue(switchValue) {
-    setStorageValue("usedLanguage", switchValue);
-    setUsedLanguage(switchValue);
-  }
-
-  useEffect(() => {
-    GetStoredValue();
-  }, []);
-
-  if (isLoaded) {
-    return(
-      <View style={styles.mainContainer}>
-        <View style={styles.textContainer}>
-          <Text style={styles.text}>Language</Text>
-        </View>
-        <View style={styles.switchContainer}>
-          <TouchableOpacity style={styles.flagImageButton} onPress={() => UpdateSwitchValue("fr")}>
-            <Image source={require('../../../assets/frFlag.png')} style={[styles.flagImage, usedLanguage !== "fr" ? { opacity: 0.5 } : {}]} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.flagImageButton} onPress={() => UpdateSwitchValue("uk")}>
-            <Image source={require('../../../assets/ukFlag.png')} style={[styles.flagImage, usedLanguage !== "uk" ? { opacity: 0.5 } : {}]} />
-          </TouchableOpacity>
-        </View>
+  return(
+    <View style={styles.mainContainer}>
+      <View style={styles.textContainer}>
+        <Text style={styles.text}>{ language.languageTitle }</Text>
       </View>
-    );
-  } else {
-    return(
-      <LoadingIndicator />
-    );
-  }
+      <View style={styles.switchContainer}>
+        <TouchableOpacity style={styles.flagImageButton} onPress={() => ChangeLanguage("fr")}>
+          <Image source={require('../../../assets/frFlag.png')} style={[styles.flagImage, language.id !== "fr" ? { opacity: 0.5 } : {}]} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.flagImageButton} onPress={() => ChangeLanguage("en")}>
+          <Image source={require('../../../assets/ukFlag.png')} style={[styles.flagImage, language.id !== "en" ? { opacity: 0.5 } : {}]} />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 }
