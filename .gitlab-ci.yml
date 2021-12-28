@@ -2,6 +2,7 @@
 
 stages:
   - build
+  - sonar
 
 build:
   stage: build
@@ -15,5 +16,17 @@ build:
       - React/MatriLED/node_modules
   only:
     - Mobile-Application
+
+Sonar:
+  image:
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+  stage: sonar
+  variables:
+    SONAR_TOKEN: "ede82ba4e403302d7205acf541ba4c62d3d3676a"
+    SONAR_HOST_URL: "http://hervaud.ddns.net:9000/"
+    GIT_DEPTH: 0
+  script:
+    - sonar-scanner -Dproject.settings="conf/sonar-project.properties"
 
 ...
